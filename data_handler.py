@@ -1,4 +1,4 @@
-import persistence
+import util
 
 
 def get_card_status(status_id):
@@ -11,12 +11,18 @@ def get_card_status(status_id):
     return next((status['title'] for status in statuses if status['id'] == str(status_id)), 'Unknown')
 
 
-def get_boards():
+@util.connection_handler
+def get_boards(cursor):
     """
     Gather all boards
     :return:
     """
-    return persistence.get_boards(force=True)
+    query = f"""
+            SELECT * FROM board
+            ORDER BY title;
+            """
+    cursor.execute(query)
+    return cursor.fetchall()
 
 
 def get_cards_for_board(board_id):
