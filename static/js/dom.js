@@ -4,6 +4,12 @@ import { dataHandler } from "./data_handler.js";
 export let dom = {
     init: function () {
         // This function should run once, when the page is loaded.
+        //main szerű használat:
+            // loadBoards
+            // showBoards
+            // loadCards
+            // showCards
+
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
@@ -19,21 +25,28 @@ export let dom = {
 
         for(let board of boards){
             boardList += `
-                <li>${board.title}</li>
+                <div><li>${board.title}</li></div>
             `;
         }
 
         const outerHtml = `
             <ul class="board-container">
                 ${boardList}
-            </ul>
-        `;
+            </ul>`;
+
+
 
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
     loadCards: function (boardId) {
-        // retrieves cards and makes showCards called
+        let cardsList = '';
+
+        for(let card of cards){
+            cardsList += `
+                <div><li>${card.title}</li></div>
+            `;
+        }
     },
     showCards: function (cards) {
         // shows the cards of a board
