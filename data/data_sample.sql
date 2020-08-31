@@ -47,8 +47,16 @@ ALTER TABLE ONLY card
     ADD CONSTRAINT fk_status_id FOREIGN KEY (status_id) REFERENCES status(id);
 
 
+INSERT INTO board VALUES(1,'Board 1');
+INSERT INTO board VALUES(2,'Board 2');
+
+INSERT INTO status VALUES(0,'new');
+INSERT INTO status VALUES(1,'in progress');
+INSERT INTO status VALUES(2,'testing');
+INSERT INTO status VALUES(3,'done');
+
 INSERT INTO card VALUES (1,1,'new card 1',0,0);
-INSERT INTO card VALUES (2,1,'new card' 2,0,1);
+INSERT INTO card VALUES (2,1,'new card 2',0,1);
 INSERT INTO card VALUES (3,1, 'in progress card',1,0);
 INSERT INTO card VALUES (4,1,'planning',2,0);
 INSERT INTO card VALUES(5,1,'done card 1',3,0);
@@ -59,23 +67,4 @@ INSERT INTO card VALUES(9,2,'in progress card',1,0);
 INSERT INTO card VALUES(10,2,'planning',2,0);
 INSERT INTO card VALUES(11,2,'done card 1',3,0);
 INSERT INTO card VALUES(12,2,'done card 1',3,1);
-
-
-INSERT INTO status VALUES(0,'new');
-INSERT INTO status VALUES(1,'in progress');
-INSERT INTO status VALUES(2,'testing');
-INSERT INTO status VALUES(3,'done');
-
-
-INSERT INTO board VALUES(1,'Board 1');
-INSERT INTO board VALUES(2,'Board 2');
-
-
-
-
-
-
-
-
-
 
