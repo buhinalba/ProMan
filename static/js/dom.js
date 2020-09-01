@@ -29,16 +29,16 @@ export let dom = {
             boardList += `    
     
         <section class="board">
-            <div class="board-header"><span class="board-title" id="${board.id}">${board.title}</span>
+            <div class="board-header"><span class="board-title">${board.title}</span>
                 <button class="board-add">Add Card</button>
                 <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
             </div>
             <div class="board-columns">
                 <div class="board-column">
-                    <div class="board-column-title">New</div>
-                        <div class="board-column-content">
+                    ` +this.loadStatuses(board.id)+ `
+                          <div class="board-column-content" id="${board.id}">
                             `+this.loadCards(board.id)+`
-                        </div>
+                          </div>
                     </div>
                 </div>
             </div>
@@ -52,12 +52,34 @@ export let dom = {
         let boardsContainer = document.querySelector('.board-container');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
+    loadStatuses: function (boardId){
+        dataHandler.getStatuses(function(statuses){
+            dom.showStatuses(boardId, statuses);
+        });
+    },
+    showStatuses: function (boardId, statuses) {
+        // shows the cards of a board
+        let statusList = '';
+
+        for(let status of statuses){
+            statusList += `    
+                        <div class="board-column-title column-${status.id}">${status.title}</div>
+
+            `;
+        }
+
+        const outerHtml = `${statusList}`;
+
+        let statusContainer = document.querySelector('.board-column');
+        statusContainer.insertAdjacentHTML("beforeend", outerHtml);
+        // it adds necessary event listeners also
+    },
     loadCards: function (boardId) {
             dataHandler.getBoard(boardId, function(cards) {
-                dom.showCards(cards);
+                dom.showCards(boardId, cards);
             });
     },
-    showCards: function (cards) {
+    showCards: function (boardId, cards) {
         // shows the cards of a board
         let cardsList = '';
 
@@ -72,7 +94,7 @@ export let dom = {
 
         const outerHtml = `${cardsList}`;
 
-        let cardsContainer = document.querySelector('.board-column-content');
+        let cardsContainer = document.getElementById(`${boardId}`);
         cardsContainer.insertAdjacentHTML("beforeend", outerHtml);
         // it adds necessary event listeners also
     },
