@@ -24,17 +24,36 @@ export let dom = {
         let boardList = '';
 
         for(let board of boards){
-            boardList += `
-                ${board.title}
-                
+            boardList += `    
+    
+        <section class="board">
+            <div class="board-header"><span class="board-title">${board.title}</span>
+                <button class="board-add">Add Card</button>
+                <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+            </div>
+            <div class="board-columns">
+                <div class="board-column">
+                    <div class="board-column-title">New</div>
+                    <div class="board-column-content">
+                        <div class="card">
+                            <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                            <div class="card-title">Card 1</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                            <div class="card-title">Card 2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+   
             `;
         }
 
         const outerHtml = `${boardList}`;
 
-
-
-        let boardsContainer = document.querySelector('.board-title');
+        let boardsContainer = document.querySelector('.board-container');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
     loadCards: function (boardId) {
