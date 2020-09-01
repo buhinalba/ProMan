@@ -25,18 +25,16 @@ export let dom = {
 
         for(let board of boards){
             boardList += `
-                <div><li>${board.title}</li></div>
+                ${board.title}
+                
             `;
         }
 
-        const outerHtml = `
-            <ul class="board-container">
-                ${boardList}
-            </ul>`;
+        const outerHtml = `${boardList}`;
 
 
 
-        let boardsContainer = document.querySelector('#boards');
+        let boardsContainer = document.querySelector('.board-title');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
     loadCards: function (boardId) {
