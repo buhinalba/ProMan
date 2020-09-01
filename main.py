@@ -14,6 +14,14 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        session["username"] = request.form["username"]
+        return redirect(url_for(""))
+    return render_template('login.html')
+
+
 @app.route("/get-boards")
 @json_response
 def get_boards():
