@@ -27,7 +27,7 @@ def get_boards(cursor):
 
 
 @util.connection_handler
-def get_cards_for_board(cursor: RealDictCursor, board_id):
+def get_cards_for_board(cursor, board_id):
     """persistence.clear_cache()
     all_cards = persistence.get_cards()
     matching_cards = []
@@ -38,7 +38,7 @@ def get_cards_for_board(cursor: RealDictCursor, board_id):
     return matching_cards"""
     query = """
                 SELECT * FROM card
-                WHERE board_id == %(board_id)s
+                WHERE board_id = %(board_id)s
                 ORDER BY  title;
                 """
     cursor.execute(query, {'board_id': board_id})

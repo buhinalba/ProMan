@@ -3,6 +3,8 @@ import { dataHandler } from "./data_handler.js";
 
 export let dom = {
     init: function () {
+        //this.loadBoards()
+        //this.loadCards()
         // This function should run once, when the page is loaded.
         //main szerű használat:
             // loadBoards
@@ -27,21 +29,15 @@ export let dom = {
             boardList += `    
     
         <section class="board">
-            <div class="board-header"><span class="board-title">${board.title}</span>
+            <div class="board-header"><span class="board-title" id="${board.id}">${board.title}</span>
                 <button class="board-add">Add Card</button>
                 <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
             </div>
             <div class="board-columns">
                 <div class="board-column">
                     <div class="board-column-title">New</div>
-                    <div class="board-column-content">
-                        <div class="card">
-                            <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
-                            <div class="card-title">Card 1</div>
-                        </div>
-                        <div class="card">
-                            <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
-                            <div class="card-title">Card 2</div>
+                        <div class="board-column-content">
+                            
                         </div>
                     </div>
                 </div>
@@ -57,16 +53,27 @@ export let dom = {
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
     },
     loadCards: function (boardId) {
-        let cardsList = '';
-
-        for(let card of cards){
-            cardsList += `
-                <div><li>${card.title}</li></div>
-            `;
-        }
+            dataHandler.getBoard(boardId, function(cards) {
+                dom.showCards(cards);
+            });
     },
     showCards: function (cards) {
         // shows the cards of a board
+        let cardsList = '';
+
+        for(let card of cards){
+            cardsList += `    
+                        <div class="card">
+                            <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                            <div class="card-title">${card.title}</div>
+                        </div>
+            `;
+        }
+
+        const outerHtml = `${cardsList}`;
+
+        let cardsContainer = document.querySelector('.board-column-content');
+        cardsContainer.insertAdjacentHTML("beforeend", outerHtml);
         // it adds necessary event listeners also
     },
     // here comes more features
