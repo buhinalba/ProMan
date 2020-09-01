@@ -31,7 +31,7 @@ def logout():
 def register():
     if request.method == "POST":
         return redirect(url_for("login"))
-    return render_template('register.html')
+    return render_template('registration.html')
 
 
 @app.route("/get-boards")
