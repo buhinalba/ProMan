@@ -9,7 +9,7 @@ ALTER TABLE IF EXISTS ONLY public.card DROP CONSTRAINT IF EXISTS fk_status_id CA
 DROP TABLE IF EXISTS public.board;
 CREATE TABLE board (
     id serial NOT NULL,
-    name varchar
+    title varchar
 );
 
 
@@ -68,3 +68,5 @@ INSERT INTO card VALUES(10,2,'planning',2,0);
 INSERT INTO card VALUES(11,2,'done card 1',3,0);
 INSERT INTO card VALUES(12,2,'done card 1',3,1);
 
+
+SELECT * from card
