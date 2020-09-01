@@ -4,7 +4,8 @@ ALTER TABLE IF EXISTS ONLY public.card DROP CONSTRAINT IF EXISTS pk_card_id CASC
 
 ALTER TABLE IF EXISTS ONLY public.card DROP CONSTRAINT IF EXISTS fk_board_id CASCADE;
 ALTER TABLE IF EXISTS ONLY public.card DROP CONSTRAINT IF EXISTS fk_status_id CASCADE;
-ALTER TABLE IF EXISTS ONLY public."user" DROP CONSTRAINT IF EXISTS fk_user_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.board DROP CONSTRAINT IF EXISTS fk_user_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.status DROP CONSTRAINT IF EXISTS fk_board_id CASCADE;
 
 
 DROP TABLE IF EXISTS public.board;
@@ -18,7 +19,8 @@ CREATE TABLE board (
 DROP TABLE IF EXISTS public.status;
 CREATE TABLE status (
     id serial NOT NULL,
-    title varchar
+    title varchar,
+    board_id integer
 );
 
 
@@ -61,16 +63,24 @@ ALTER TABLE ONLY card
 ALTER TABLE ONLY board
     ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES "user"(id);
 
+ALTER TABLE ONLY status
+    ADD CONSTRAINT fk_board_id FOREIGN KEY (board_id) REFERENCES board(id);
+
 -- password of user: '1111'
 INSERT INTO "user" VALUES (1, 'pistike', '$2b$12$eW00pz93SL0sVCSsNg0pAupoYv9F3dhjURUxmsp9AiWswzIu4YRAi');
 
 INSERT INTO board VALUES(1,'Board 1', 1);
 INSERT INTO board VALUES(2,'Board 2', 1);
-INSERT INTO status VALUES(0,'new');
-INSERT INTO status VALUES(1,'in progress');
-INSERT INTO status VALUES(2,'testing');
 
-INSERT INTO status VALUES(3,'done');
+INSERT INTO status VALUES(0,'new', 1);
+INSERT INTO status VALUES(1,'in progress', 1);
+INSERT INTO status VALUES(2,'testing', 1);
+INSERT INTO status VALUES(3,'done', 1);
+INSERT INTO status VALUES(4,'new', 2);
+INSERT INTO status VALUES(5,'in progress', 2);
+INSERT INTO status VALUES(6,'testing', 2);
+INSERT INTO status VALUES(7,'done', 2);
+
 INSERT INTO card VALUES (1,1,'new card 1',0,0);
 INSERT INTO card VALUES (2,1,'new card 2',0,1);
 INSERT INTO card VALUES (3,1, 'in progress card',1,0);
@@ -82,5 +92,4 @@ INSERT INTO card VALUES(8,2,'new card 2',0,1);
 INSERT INTO card VALUES(9,2,'in progress card',1,0);
 INSERT INTO card VALUES(10,2,'planning',2,0);
 INSERT INTO card VALUES(11,2,'done card 1',3,0);
-
 INSERT INTO card VALUES(12,2,'done card 1',3,1);
