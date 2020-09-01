@@ -37,7 +37,7 @@ export let dom = {
                 <div class="board-column">
                     <div class="board-column-title">New</div>
                         <div class="board-column-content">
-                            
+                            `+this.loadCards(board.id)+`
                         </div>
                     </div>
                 </div>

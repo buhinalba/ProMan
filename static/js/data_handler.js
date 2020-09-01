@@ -33,6 +33,7 @@ export let dataHandler = {
         });
     },
     getBoard: function (boardId, callback) {
+        console.log(boardId)
         // the board is retrieved and then the callback function is called with the board
         this._api_get(`/get-cards/${boardId}`, (response) => {
             this._data['cards'] = response;

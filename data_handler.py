@@ -38,8 +38,9 @@ def get_cards_for_board(cursor, board_id):
     return matching_cards"""
     query = """
                 SELECT * FROM card
-                WHERE board_id = %(board_id)s
+                WHERE board_id = %(board_id)s AND status_id = 0
                 ORDER BY  title;
                 """
+                
     cursor.execute(query, {'board_id': board_id})
     return cursor.fetchall()
