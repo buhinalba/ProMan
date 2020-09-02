@@ -64,19 +64,17 @@ export let dom = {
         const input_field = '<input class="create-board-title" placeholder="Write board title then press enter"/>'
         createBoardButton.insertAdjacentHTML('afterend', input_field);
 
-        document.querySelector(".create-board-title")
-            .addEventListener('keypress', (e) => {
+        let inputField = document.querySelector(".create-board-title")
+        inputField.addEventListener('keypress', (e) => {
                     console.log(e.key)
                     if (e.key === 'Enter') {
                         let board_title = e.target.value
                         console.log(board_title)
                         dataHandler.createNewBoard(board_title, dom.loadBoards)
+                        inputField.remove()
+                        createBoardButton.classList.remove('hidden');
                     }
                 }
             )
-
-        // () => {
-        // todo add callback function to print newly created board
-        // dataHandler.createNewBoard(board_title, () => console.log("HEY"))}
     }
 };
