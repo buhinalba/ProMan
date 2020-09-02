@@ -20,7 +20,7 @@ def get_boards(cursor):
 def get_cards_for_board(cursor, board_id):
     query = """
                 SELECT * FROM card
-                WHERE board_id = %(board_id)s AND status_id = 1
+                WHERE board_id = %(board_id)s AND status_id = 0
                 ORDER BY  title;
                 """
                 
