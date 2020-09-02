@@ -2,6 +2,8 @@ from flask import Flask, render_template, url_for, request, redirect
 from util import json_response
 
 import data_handler
+import util
+
 
 app = Flask(__name__)
 
@@ -17,6 +19,9 @@ def index():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
+        user_exist = data_handler.get_user(request.form["username"])
+        if user_exist:
+            password = user_exist["password"]
         return redirect(url_for("index"))
     return render_template('login.html')
 
@@ -30,8 +35,13 @@ def logout():
 @app.route('/registration', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        username, password = request.form["username"],request.form["password"]
+        data_handler.register(username, password)
         return redirect(url_for("login"))
     return render_template('registration.html')
+
+
+
 
 
 @app.route("/get-boards")
