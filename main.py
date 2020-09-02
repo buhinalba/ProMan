@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, session, redirect
+from flask import Flask, render_template, url_for, request, session, redirect, jsonify, make_response
 from util import json_response
 
 import data_handler
@@ -39,6 +39,17 @@ def get_cards_for_board(board_id: int):
     :param board_id: id of the parent board
     """
     return data_handler.get_cards_for_board(board_id)
+
+
+@app.route("/create-board", methods=["POST"])
+def create_board():
+    if "username" in session:
+        username = session["username"]
+    else:
+        username = None
+    request.get_json(force=True)
+    data_handler.create_board(username)
+    return make_response(jsonify({"response": "data received"}), 200)
 
 
 def main():

@@ -53,4 +53,8 @@ export let dom = {
         // it adds necessary event listeners also
     },
     // here comes more features
+    createBoard: function () {
+        // todo add callback function to print newly created board
+        dataHandler.createNewBoard(() => console.log("created new board") )
+    }
 };

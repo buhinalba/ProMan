@@ -47,8 +47,19 @@ export let dataHandler = {
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
     },
-    createNewBoard: function (boardTitle, callback) {
+    createNewBoard: function (callback) {
         // creates new board, saves it and calls the callback function with its data
+        fetch(`http://127.0.0.1:5000/create-board`, {
+            method: "GET",
+            credentials: "same-origin",
+        })
+            .then(response => response.json)
+            .then(callback)
+            .catch(error => {
+                console.log("Fetch error: " + error);
+            });
+        // is event handler should trigger this function, the use fetch with post method, the
+        // callback to print??
     },
     createNewCard: function (cardTitle, boardId, statusId, callback) {
         // creates new card, saves it and calls the callback function with its data

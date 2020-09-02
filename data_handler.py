@@ -43,3 +43,29 @@ def get_cards_for_board(cursor: RealDictCursor, board_id):
                 """
     cursor.execute(query, {'board_id': board_id})
     return cursor.fetchall()
+
+
+# HOW TO get new board's board id??
+@util.connection_handler
+def create_board(cursor: RealDictCursor, username):
+    user_id = get_user(username)["id"]
+    query_board = """
+        INSERT INTO board
+        VALUES (DEFAULT, 'New Board', %(user_id)s)
+    """
+    board_id = 0  # don't know yet how to get it
+    query_status = """
+        INSERT INTO status
+    """
+    cursor.execute(query_board, {'user_id': user_id})
+    # cursor.execute(query_status, {'board_id': board_id})
+
+
+@util.connection_handler
+def get_user(cursor: RealDictCursor, username):
+    query = """
+        SELECT * FROM "user"
+            WHERE username = %(username)s
+        """
+    cursor.execute(query, {'username': username})
+    return cursor.fetchone()
