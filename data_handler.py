@@ -17,14 +17,14 @@ def get_boards(cursor):
 
 
 @util.connection_handler
-def get_cards_for_board(cursor, board_id):
+def get_cards_for_board(cursor, board_id, status_id):
     query = """
                 SELECT * FROM card
-                WHERE board_id = %(board_id)s AND status_id = 0
+                WHERE board_id = %(board_id)s AND status_id=%(status_id)s
                 ORDER BY  title;
                 """
                 
-    cursor.execute(query, {'board_id': board_id})
+    cursor.execute(query, {'board_id': board_id, 'status_id': status_id})
     return cursor.fetchall()
 
 
@@ -43,7 +43,7 @@ def get_statuses(cursor):
 def get_card_by_status(cursor, status_id):
     query = """
                 SELECT * FROM card
-                WHERE status_id = %(status_id)s AND board_id = 1
+                WHERE status_id = %(status_id)s
                 ORDER BY title;
                 """
 

@@ -32,11 +32,11 @@ export let dataHandler = {
             callback(response);
         });
     },
-    getBoard: function (boardId, callback) {
+    getBoard: function (boardId, statusId, callback) {
         // the board is retrieved and then the callback function is called with the board
-        this._api_get(`/get-cards/${boardId}`, (boardId, response) => {
+        this._api_get(`/get-cards/${boardId}/get-statuses/${statusId}`, (boardId, statusId, response) => {
             this._data['cards'] = response;
-            callback(boardId, response);
+            callback(boardId, statusId, response);
         });
     },
     getStatuses: function (callback) {

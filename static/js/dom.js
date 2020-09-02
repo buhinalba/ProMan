@@ -50,7 +50,7 @@ export let dom = {
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
         for (let board of boards) {
             dom.loadStatuses(board.id, function () {
-                dom.loadCards(board.id)
+
             })
         }
     },
@@ -67,23 +67,26 @@ export let dom = {
         for(let status of statuses){
             statusList += `
                     <div class="board-column">    
-                        <div class="board-column-title data-${status.id}">${status.title}</div>
+                        <div class="board-column-title" data-status="${status.id}">${status.title}</div>
                     </div>
             `;
         }
 
         let outerHtml = `${statusList}`;
 
-        let statusContainer = document.querySelector(`[data-id="${boardId}"] .board-columns`);
+        let statusContainer = document.querySelector(`.board[data-id="${boardId}"] .board-columns`);
         statusContainer.insertAdjacentHTML("beforeend", outerHtml);
+        for (let status of statuses) {
+            dom.loadCards(boardId, status.id)
+        }
         // it adds necessary event listeners also
     },
-    loadCards: function (boardId) {
-            dataHandler.getBoard(boardId, function(cards) {
-                dom.showCards(boardId, cards);
+    loadCards: function (boardId, statusId) {
+            dataHandler.getBoard(boardId, statusId, function(cards) {
+                dom.showCards(boardId, statusId, cards);
             });
     },
-    showCards: function (boardId, cards) {
+    showCards: function (boardId, statusId, cards) {
         // shows the cards of a board
         let cardsList = '';
 
@@ -98,8 +101,10 @@ export let dom = {
 
         const outerHtml = `${cardsList}`;
 
-        let cardsContainer = document.querySelector(`[data-id="${boardId}"] .board-column`);
+        let cardsContainer = document.querySelector(`.board[data-id="${boardId}"] .board-columns .board-column [data-status="${statusId}"]`);
         cardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+
+
         // it adds necessary event listeners also
     },
     // here comes more features
