@@ -47,17 +47,22 @@ def get_cards_for_board(cursor: RealDictCursor, board_id):
 @util.connection_handler
 def create_board(cursor: RealDictCursor, username, board_title):
     user_id = get_user(username)["id"]
-    print(user_id)
     cursor.execute("""
         INSERT INTO board
         VALUES (DEFAULT, %(board_title)s, %(user_id)s)
     """, {'board_title': board_title, 'user_id': user_id})
-    # board_id = 0  # don't know yet how to get it
-    # query_status = """
-    #     INSERT INTO status
-    # """
-    # cursor.execute(query_board, )
-    # cursor.execute(query_status, {'board_id': board_id})
+
+
+@util.connection_handler
+def create_default_statuses(cursor: RealDictCursor, max_id):
+    cursor.execute("""
+        INSERT INTO status (title, board_id)
+        VALUES
+        ('new', %(board_id)s),
+        ('in progress', %(board_id)s),
+        ('testing', %(board_id)s),
+        ('done', %(board_id)s)
+    """, {'board_id': max_id})
 
 
 @util.connection_handler
@@ -68,3 +73,12 @@ def get_user(cursor: RealDictCursor, username):
         """
     cursor.execute(query, {'username': username})
     return cursor.fetchone()
+
+
+@util.connection_handler
+def get_latest_board_id(cursor: RealDictCursor):
+    cursor.execute("""
+        SELECT max(id) FROM board
+    """)
+    return cursor.fetchone()
+
