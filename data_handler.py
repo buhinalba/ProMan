@@ -1,6 +1,7 @@
 import util
 from psycopg2.extras import RealDictCursor
 import bcrypt
+from flask import redirect
 
 
 def get_card_status(status_id):
@@ -50,8 +51,10 @@ def get_cards_for_board(cursor: RealDictCursor, board_id):
 def register(cursor: RealDictCursor, username, password):
     password = hash_password(password)
     cursor.execute("""
-    INSERT INTO "user"
-        VALUES (DEFAULT, %(username)s, %(password)s)
+        INSERT INTO "user"
+        VALUES(DEFAULT, %(username)s, %(password)s)
+        ON CONFLICT
+        DO NOTHING
         """, {'username':username, 'password':password})
 
 

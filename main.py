@@ -19,10 +19,7 @@ def index():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        user_exist = data_handler.get_user(request.form["username"])
-        if user_exist:
-            password = user_exist["password"]
-        return redirect(url_for("index"))
+        pass
     return render_template('login.html')
 
 
