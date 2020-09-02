@@ -9,7 +9,3 @@ function init() {
 }
 
 init();
-
-
-let createBoardButton = document.querySelector(".create-board")
-createBoardButton.addEventListener('click', dom.createBoard)

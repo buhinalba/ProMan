@@ -47,9 +47,10 @@ def create_board():
         username = session["username"]
     else:
         username = None
-    request.get_json(force=True)
-    data_handler.create_board(username)
-    return make_response(jsonify({"response": "data received"}), 200)
+    req = request.get_json(force=True)
+    print(req)
+    data_handler.create_board("pistike", req["board_title"])
+    return make_response(jsonify({"message": "OK"}), 200)
 
 
 def main():

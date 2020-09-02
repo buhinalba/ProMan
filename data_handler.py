@@ -1,7 +1,6 @@
 import util
 from psycopg2.extras import RealDictCursor
 
-
 def get_card_status(status_id):
     """
     Find the first status matching the given id
@@ -38,26 +37,26 @@ def get_cards_for_board(cursor: RealDictCursor, board_id):
     return matching_cards"""
     query = """
                 SELECT * FROM card
-                WHERE board_id == %(board_id)s
+                WHERE board_id = %(board_id)s
                 ORDER BY  title;
                 """
     cursor.execute(query, {'board_id': board_id})
     return cursor.fetchall()
 
 
-# HOW TO get new board's board id??
 @util.connection_handler
-def create_board(cursor: RealDictCursor, username):
+def create_board(cursor: RealDictCursor, username, board_title):
     user_id = get_user(username)["id"]
-    query_board = """
+    print(user_id)
+    cursor.execute("""
         INSERT INTO board
-        VALUES (DEFAULT, 'New Board', %(user_id)s)
-    """
-    board_id = 0  # don't know yet how to get it
-    query_status = """
-        INSERT INTO status
-    """
-    cursor.execute(query_board, {'user_id': user_id})
+        VALUES (DEFAULT, %(board_title)s, %(user_id)s)
+    """, {'board_title': board_title, 'user_id': user_id})
+    # board_id = 0  # don't know yet how to get it
+    # query_status = """
+    #     INSERT INTO status
+    # """
+    # cursor.execute(query_board, )
     # cursor.execute(query_status, {'board_id': board_id})
 
 

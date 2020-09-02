@@ -29,8 +29,9 @@ export let dom = {
             `;
         }
 
-        const outerHtml = `
-            <ul class="board-container">
+        const outerHtml =
+            `<button class="create-board">Add New Board</button>` +
+            `<ul class="board-container">
                 ${boardList}
             </ul>`;
 
@@ -38,6 +39,9 @@ export let dom = {
 
         let boardsContainer = document.querySelector('#boards');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+        let createButton = document.querySelector('.create-board')
+        createButton.addEventListener('click', dom.createBoard)
+
     },
     loadCards: function (boardId) {
         let cardsList = '';
@@ -53,8 +57,26 @@ export let dom = {
         // it adds necessary event listeners also
     },
     // here comes more features
-    createBoard: function () {
+    createBoard: function (event) {
+        let createBoardButton = event.target;
+        createBoardButton.classList.add('hidden');
+
+        const input_field = '<input class="create-board-title" placeholder="Write board title then press enter"/>'
+        createBoardButton.insertAdjacentHTML('afterend', input_field);
+
+        document.querySelector(".create-board-title")
+            .addEventListener('keypress', (e) => {
+                    console.log(e.key)
+                    if (e.key === 'Enter') {
+                        let board_title = e.target.value
+                        console.log(board_title)
+                        dataHandler.createNewBoard(board_title, dom.loadBoards)
+                    }
+                }
+            )
+
+        // () => {
         // todo add callback function to print newly created board
-        dataHandler.createNewBoard(() => console.log("created new board") )
+        // dataHandler.createNewBoard(board_title, () => console.log("HEY"))}
     }
 };

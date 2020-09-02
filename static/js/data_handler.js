@@ -19,6 +19,18 @@ export let dataHandler = {
     _api_post: function (url, data, callback) {
         // it is not called from outside
         // sends the data to the API, and calls callback function
+
+        fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data),
+            credentials: "same-origin"
+        })
+        .then(response => response.json())  // parse the response as JSON
+        .then(json_response => callback(json_response))
+        .catch(error => {
+                console.log("Fetch error: " + error);
+            });
     },
     init: function () {
     },
@@ -47,17 +59,10 @@ export let dataHandler = {
     getCard: function (cardId, callback) {
         // the card is retrieved and then the callback function is called with the card
     },
-    createNewBoard: function (callback) {
+    createNewBoard: function (board_title, callback) {
         // creates new board, saves it and calls the callback function with its data
-        fetch(`http://127.0.0.1:5000/create-board`, {
-            method: "GET",
-            credentials: "same-origin",
-        })
-            .then(response => response.json)
-            .then(callback)
-            .catch(error => {
-                console.log("Fetch error: " + error);
-            });
+        let data = {board_title: board_title}
+        this._api_post("/create-board", data, callback)
         // is event handler should trigger this function, the use fetch with post method, the
         // callback to print??
     },
