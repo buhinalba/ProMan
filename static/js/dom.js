@@ -34,13 +34,10 @@ export let dom = {
                 <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
             </div>
             <div class="board-columns">
-                <div class="board-column">
-                   
-                          <div class="board-column-content">
+                  
+                 <div class="board-column-content">
                           
-                          </div>
-                    </div>
-                </div>
+                 </div>
             </div>
         </section>
    
@@ -68,15 +65,16 @@ export let dom = {
         let statusList = '';
 
         for(let status of statuses){
-            statusList += `    
+            statusList += `
+                    <div class="board-column">    
                         <div class="board-column-title data-${status.id}">${status.title}</div>
-
+                    </div>
             `;
         }
 
-        const outerHtml = `${statusList}`;
+        let outerHtml = `${statusList}`;
 
-        let statusContainer = document.querySelector(`[data-id="${boardId}"] .board-column`);
+        let statusContainer = document.querySelector(`[data-id="${boardId}"] .board-columns`);
         statusContainer.insertAdjacentHTML("beforeend", outerHtml);
         // it adds necessary event listeners also
     },
