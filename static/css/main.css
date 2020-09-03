@@ -157,8 +157,26 @@ margin: 18px 32px 18px 32px;
     display: none !important;
 }
 
+.create-board {
+    position: absolute;
+    top: 14%;
+    left: 5%;
+    -ms-transform: translateY(-10%);
+    transform: translateY(-10%);
+    /*left: 30%;*/
+    /*-ms-transform: translate(-50%, 0%);*/
+    /*transform: translate(-50%, 0%);*/
+    /*position: absolute;*/
+    border-radius: 5px;
+}
+
 .create-board-title {
+    left: 50%;
+    -ms-transform: translate(-50%, -30%);
+    transform: translate(-50%, -30%);
+    position: absolute;
     width: 250px;
+    border-radius: 5px;
 }
 
 

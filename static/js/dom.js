@@ -51,6 +51,8 @@ export let dom = {
 
             })
         }
+        let renameBoardButton = document.querySelector('.board-title')
+        renameBoardButton.addEventListener('click', dom.renameBoard)
         // todo add rename feature for boards
     },
     loadStatuses: function (boardId, callback){
@@ -103,7 +105,6 @@ export let dom = {
 
         let cardsContainer = document.querySelector(`.board[data-id="${boardId}"] .board-columns .board-column [data-status="${statusId}"]`);
         cardsContainer.insertAdjacentHTML("beforeend", outerHtml);
-        // todo add rename feature for cards
 
         // it adds necessary event listeners also
     },
@@ -127,5 +128,9 @@ export let dom = {
                     }
                 }
             )
+    },
+    renameBoard: function (event) {
+        let renameBoardButton = event.target;
+        renameBoardButton.classList.add('hidden')
     }
 };
