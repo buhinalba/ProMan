@@ -3,6 +3,8 @@ import { dataHandler } from "./data_handler.js";
 
 export let dom = {
     init: function () {
+        //this.loadBoards()
+        //this.loadCards()
         // This function should run once, when the page is loaded.
         //main szerű használat:
             // loadBoards
@@ -24,32 +26,85 @@ export let dom = {
         let boardList = '';
 
         for(let board of boards){
-            boardList += `
-                <div><li>${board.title}</li></div>
+            boardList += `    
+    
+        <section class="board" data-id="${board.id}">
+            <div class="board-header"><span class="board-title">${board.title}</span>
+                <button class="board-add">Add Card</button>
+                <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+            </div>
+            <div class="board-columns">
+                  
+                 <div class="board-column-content">
+                          
+                 </div>
+            </div>
+        </section>
+   
             `;
         }
 
-        const outerHtml = `
-            <ul class="board-container">
-                ${boardList}
-            </ul>`;
+        const outerHtml = `${boardList}`;
 
-
-
-        let boardsContainer = document.querySelector('#boards');
+        let boardsContainer = document.querySelector('.board-container');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+        for (let board of boards) {
+            dom.loadStatuses(board.id, function () {
+
+            })
+        }
     },
-    loadCards: function (boardId) {
+    loadStatuses: function (boardId, callback){
+        dataHandler.getStatuses(function(statuses){
+            dom.showStatuses(boardId, statuses);
+            callback();
+        });
+    },
+    showStatuses: function (boardId, statuses) {
+        // shows the cards of a board
+        let statusList = '';
+
+        for(let status of statuses){
+            statusList += `
+                    <div class="board-column">    
+                        <div class="board-column-title" data-status="${status.id}">${status.title}</div>
+                    </div>
+            `;
+        }
+
+        let outerHtml = `${statusList}`;
+
+        let statusContainer = document.querySelector(`.board[data-id="${boardId}"] .board-columns`);
+        statusContainer.insertAdjacentHTML("beforeend", outerHtml);
+        for (let status of statuses) {
+            dom.loadCards(boardId, status.id)
+        }
+        // it adds necessary event listeners also
+    },
+    loadCards: function (boardId, statusId) {
+            dataHandler.getBoard(boardId, statusId, function(cards) {
+                dom.showCards(boardId, statusId, cards);
+            });
+    },
+    showCards: function (boardId, statusId, cards) {
+        // shows the cards of a board
         let cardsList = '';
 
         for(let card of cards){
-            cardsList += `
-                <div><li>${card.title}</li></div>
+            cardsList += `    
+                        <div class="card">
+                            <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                            <div class="card-title">${card.title}</div>
+                        </div>
             `;
         }
-    },
-    showCards: function (cards) {
-        // shows the cards of a board
+
+        const outerHtml = `${cardsList}`;
+
+        let cardsContainer = document.querySelector(`.board[data-id="${boardId}"] .board-columns .board-column [data-status="${statusId}"]`);
+        cardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+
+
         // it adds necessary event listeners also
     },
     // here comes more features
