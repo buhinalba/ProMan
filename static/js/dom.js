@@ -87,6 +87,12 @@ export let dom = {
             dom.loadCards(boardId, status.id)
         }
         // todo add rename feature to statuses
+        let renameStatusButtons = document.querySelectorAll('.board-column-title')
+        for (let renameStatusButton of renameStatusButtons) {
+            renameStatusButton.addEventListener('click', dom.renameStatus)
+            renameStatusButton.addEventListener('mouseover', dom.hover)
+            renameStatusButton.addEventListener('mouseleave', dom.leave)
+        }
         // it adds necessary event listeners also
     },
     loadCards: function (boardId, statusId) {
@@ -153,6 +159,25 @@ export let dom = {
                     }
                 }
             )
+    },
+    renameStatus: function (event) {
+    let renameStatusButton = event.target;
+    renameStatusButton.classList.add('hidden')
+    const input_field = '<input class="create-board-title" placeholder="Write status title then press enter"/>'
+    renameStatusButton.insertAdjacentHTML('afterend', input_field);
+    let status_id = renameStatusButton.closest('.board-column-title').dataset.status
+    let inputField = document.querySelector(".create-board-title")
+
+    inputField.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    let status_title = e.target.value
+                    console.log(status_title)
+                    dataHandler.renameStatus(status_id, status_title, dom.loadBoards)
+                    inputField.remove()
+                    renameStatusButton.classList.remove('hidden');
+                }
+            }
+        )
     },
     hover: function (event) {
         let button = event.target
