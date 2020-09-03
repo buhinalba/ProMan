@@ -109,6 +109,14 @@ def create_board():
     return make_response(jsonify({"message": "OK"}), 200)
 
 
+@app.route("/create-card", methods=["POST"])
+def create_card():
+    req = request.get_json(force=True)
+    data_handler.create_card("pistike", req["card_title"])
+    return make_response(jsonify({"message": "OK"}), 200)
+
+
+
 def main():
     app.run(debug=True)
 

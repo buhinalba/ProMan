@@ -31,6 +31,7 @@ export let dom = {
             <div class="board-header"><span class="board-title">${board.title}</span>
                 <button class="board-add">Add Card</button>
                 <button class="board-toggle collapsed" type="button" data-toggle="collapse" data-target="#toggle-${board.id}" aria-expanded="false" aria-controls="board-columns"><i class="fas fa-chevron-down"></i></button>
+                <button class="create-card">Create Card</button>
             </div>
             <div class="board-columns collapse" id="toggle-${board.id}">
                   
@@ -126,5 +127,12 @@ export let dom = {
                     }
                 }
             )
-    }
+    },
+    createCard: function(boardId, event){
+                let createCardButton = event.target;
+                createCardButton.classList.add('hidden');
+
+                const input_field = '<input class="create-card"/>'
+                createCardButton.insertAdjacentHTML('afterend', input_field);
+            }
 };
