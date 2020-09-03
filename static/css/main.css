@@ -127,3 +127,28 @@ section.board{
 .card-title{
     padding-right: 16px;
 }
+#title{
+margin: 18px 32px 18px 32px;
+}
+
+#prev-button{
+    margin-left: 32px;
+}
+
+.table{
+    margin: 32px;
+    width: 95% !important;
+}
+#username-label{
+    margin-top: 200px !important;
+}
+.form-group{
+    width: 30% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+#submit-button{
+    margin-left: 35% !important;
+    width: 30% !important;
+}

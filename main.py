@@ -1,7 +1,9 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 from util import json_response
 
 import data_handler
+import util
+
 
 app = Flask(__name__)
 
@@ -12,6 +14,31 @@ def index():
     This is a one-pager which shows all the boards and cards
     """
     return render_template('index.html')
+
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        pass
+    return render_template('login.html')
+
+
+@app.route('/logout', methods=["GET", "POST"])
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
+
+@app.route('/registration', methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username, password = request.form["username"],request.form["password"]
+        data_handler.register(username, password)
+        return redirect(url_for("login"))
+    return render_template('registration.html')
+
+
+
 
 
 @app.route("/get-boards")

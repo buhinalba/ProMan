@@ -1,5 +1,7 @@
 import util
 from psycopg2.extras import RealDictCursor
+import bcrypt
+from flask import redirect
 
 
 def get_card_status(status_id):
@@ -43,3 +45,34 @@ def get_cards_for_board(cursor, board_id):
                 """
     cursor.execute(query, {'board_id': board_id})
     return cursor.fetchall()
+
+
+@util.connection_handler
+def register(cursor: RealDictCursor, username, password):
+    password = hash_password(password)
+    cursor.execute("""
+        INSERT INTO "user"
+        VALUES(DEFAULT, %(username)s, %(password)s)
+        ON CONFLICT
+        DO NOTHING
+        """, {'username':username, 'password':password})
+
+
+@util.connection_handler
+def get_user(cursor: RealDictCursor, username):
+    cursor.execute("""
+        SELECT * FROM user 
+        WHERE username like %(username)s
+        """,{'username':username})
+    return cursor.fetchone()
+
+
+def hash_password(plain_text_password):
+    # By using bcrypt, the salt is saved into the hash itself
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
+
+
+def verify_password(plain_text_password, hashed_password):
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
