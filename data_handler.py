@@ -83,7 +83,6 @@ def get_latest_board_id(cursor: RealDictCursor):
     return cursor.fetchone()
 
 
-
 @util.connection_handler
 def get_card_by_status(cursor, status_id):
     query = """

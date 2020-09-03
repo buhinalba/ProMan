@@ -1,5 +1,6 @@
-from flask import Flask, render_template, url_for, request, session, redirect, jsonify, make_response
+from flask import Flask, render_template, url_for, request, session, redirect, jsonify, make_response, flash
 from util import json_response
+import secrets
 
 import data_handler
 import util
@@ -7,19 +8,33 @@ import util
 
 app = Flask(__name__)
 
+app.secret_key = secrets.token_hex(12)
+
 
 @app.route("/")
 def index():
     """
     This is a one-pager which shows all the boards and cards
     """
-    return render_template('index.html')
+    if "username" in session:
+        username = session["username"]
+    else:
+        username = None
+    return render_template('index.html', username=username)
 
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        pass
+        username, password = request.form["username"], request.form["password"]
+        possible_user = data_handler.get_user(username)
+        if possible_user:
+            valid_user = data_handler.verify_password(password, possible_user["password"])
+            if valid_user:
+                session["username"] = request.form["username"]
+                return redirect("/")
+        flash("username or password invalid")
+        return redirect("/login")
     return render_template('login.html')
 
 
