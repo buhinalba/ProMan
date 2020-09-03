@@ -33,9 +33,6 @@ export let dom = {
             </div>
             <div class="board-columns">
                   
-                 <div class="board-column-content">
-                          
-                 </div>
             </div>
         </section>
    
