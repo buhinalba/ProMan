@@ -55,7 +55,7 @@ export let dom = {
         }
     },
     loadStatuses: function (boardId, callback){
-        dataHandler.getStatuses(function(statuses){
+        dataHandler.getStatuses(boardId, function(statuses){
             dom.showStatuses(boardId, statuses);
             callback();
         });
