@@ -3,6 +3,8 @@ from psycopg2.extras import RealDictCursor
 import bcrypt
 from flask import redirect
 
+# TODO what's the difference, and where to use cursor/RealDictCursor
+
 
 @util.connection_handler
 def get_boards(cursor):
@@ -31,13 +33,14 @@ def get_cards_for_board(cursor, board_id, status_id):
 
 
 @util.connection_handler
-def get_statuses(cursor):
+def get_statuses(cursor, board_id):
     query = """
                 SELECT * FROM status
+                WHERE board_id = %(board_id)s
                 ORDER BY id;
                 """
 
-    cursor.execute(query)
+    cursor.execute(query, {"board_id": board_id})
     return cursor.fetchall()
 
 
