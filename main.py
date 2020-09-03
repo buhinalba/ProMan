@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, session, redirect
+from flask import Flask, render_template, url_for, request, session, redirect, jsonify, make_response
 from util import json_response
 
 import data_handler
@@ -78,6 +78,20 @@ def get_card_by_status(status_id: int):
     :param status_id: id of the parent board
     """
     return data_handler.get_card_by_status(status_id)
+
+
+@app.route("/create-board", methods=["POST"])
+def create_board():
+    if "username" in session:
+        username = session["username"]
+    else:
+        username = None
+    req = request.get_json(force=True)
+    data_handler.create_board("pistike", req["board_title"])
+    max_id = data_handler.get_latest_board_id()["max"]
+    print(max_id)  # return None (why???)
+    data_handler.create_default_statuses(max_id)
+    return make_response(jsonify({"message": "OK"}), 200)
 
 
 def main():

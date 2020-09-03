@@ -3,8 +3,6 @@ import { dataHandler } from "./data_handler.js";
 
 export let dom = {
     init: function () {
-        //this.loadBoards()
-        //this.loadCards()
         // This function should run once, when the page is loaded.
         //main szerű használat:
             // loadBoards
@@ -27,7 +25,7 @@ export let dom = {
 
         for(let board of boards){
             boardList += `    
-    
+        
         <section class="board" data-id="${board.id}">
             <div class="board-header"><span class="board-title">${board.title}</span>
                 <button class="board-add">Add Card</button>
@@ -45,9 +43,15 @@ export let dom = {
         }
 
         const outerHtml = `${boardList}`;
+        const CreateBoardButton =
+            `<button class="create-board">Add New Board</button>`
+
 
         let boardsContainer = document.querySelector('.board-container');
         boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
+        boardsContainer.insertAdjacentHTML("beforebegin", CreateBoardButton);
+        let createButton = document.querySelector('.create-board')
+        createButton.addEventListener('click', dom.createBoard)
         for (let board of boards) {
             dom.loadStatuses(board.id, function () {
 
@@ -108,4 +112,24 @@ export let dom = {
         // it adds necessary event listeners also
     },
     // here comes more features
+    createBoard: function (event) {
+        let createBoardButton = event.target;
+        createBoardButton.classList.add('hidden');
+
+        const input_field = '<input class="create-board-title" placeholder="Write board title then press enter"/>'
+        createBoardButton.insertAdjacentHTML('afterend', input_field);
+
+        let inputField = document.querySelector(".create-board-title")
+        inputField.addEventListener('keypress', (e) => {
+                    console.log(e.key)
+                    if (e.key === 'Enter') {
+                        let board_title = e.target.value
+                        console.log(board_title)
+                        dataHandler.createNewBoard(board_title, dom.loadBoards)
+                        inputField.remove()
+                        createBoardButton.classList.remove('hidden');
+                    }
+                }
+            )
+    }
 };

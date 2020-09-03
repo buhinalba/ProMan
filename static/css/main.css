@@ -152,3 +152,11 @@ margin: 18px 32px 18px 32px;
     margin-left: 35% !important;
     width: 30% !important;
 }
+
+.hidden {
+    display: none !important;
+}
+
+.create-board-title {
+    width: 250px;
+}

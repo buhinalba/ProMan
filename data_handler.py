@@ -25,7 +25,7 @@ def get_cards_for_board(cursor, board_id, status_id):
                 WHERE board_id = %(board_id)s AND status_id=%(status_id)s
                 ORDER BY  title;
                 """
-                
+
     cursor.execute(query, {'board_id': board_id, 'status_id': status_id})
     return cursor.fetchall()
 
@@ -39,6 +39,46 @@ def get_statuses(cursor):
 
     cursor.execute(query)
     return cursor.fetchall()
+
+
+@util.connection_handler
+def create_board(cursor: RealDictCursor, username, board_title):
+    user_id = get_user(username)["id"]
+    cursor.execute("""
+        INSERT INTO board
+        VALUES (DEFAULT, %(board_title)s, %(user_id)s)
+    """, {'board_title': board_title, 'user_id': user_id})
+
+
+@util.connection_handler
+def create_default_statuses(cursor: RealDictCursor, max_id):
+    cursor.execute("""
+        INSERT INTO status (title, board_id)
+        VALUES
+        ('new', %(board_id)s),
+        ('in progress', %(board_id)s),
+        ('testing', %(board_id)s),
+        ('done', %(board_id)s)
+    """, {'board_id': max_id})
+
+
+@util.connection_handler
+def get_user(cursor: RealDictCursor, username):
+    query = """
+        SELECT * FROM "user"
+            WHERE username = %(username)s
+        """
+    cursor.execute(query, {'username': username})
+    return cursor.fetchone()
+
+
+@util.connection_handler
+def get_latest_board_id(cursor: RealDictCursor):
+    cursor.execute("""
+        SELECT max(id) FROM board
+    """)
+    return cursor.fetchone()
+
 
 
 @util.connection_handler
