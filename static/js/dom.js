@@ -74,7 +74,7 @@ export let dom = {
         for(let status of statuses){
             statusList += `
                     <div class="board-column">    
-                        <div class="board-column-title" data-status="${status.id}">${status.title}</div>
+                        <div class="board-column-title" data-status="${status.id}"><div class="status-title">${status.title}</div></div>
                     </div>
             `;
         }
@@ -87,6 +87,13 @@ export let dom = {
             dom.loadCards(boardId, status.id)
         }
         // todo add rename feature to statuses
+
+        let renameStatusButtons = document.querySelectorAll('.status-title')
+        for (let renameStatusButton of renameStatusButtons) {
+            renameStatusButton.addEventListener('click', dom.renameStatus)
+            renameStatusButton.addEventListener('mouseover', dom.hover)
+            renameStatusButton.addEventListener('mouseleave', dom.leave)
+        }
         // it adds necessary event listeners also
     },
     loadCards: function (boardId, statusId) {
@@ -146,13 +153,28 @@ export let dom = {
         inputField.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
                         let board_title = e.target.value
-                        console.log(board_title)
                         dataHandler.renameBoard(board_id, board_title, dom.loadBoards)
                         inputField.remove()
                         renameBoardButton.classList.remove('hidden');
                     }
                 }
             )
+    },
+    renameStatus: function (event) {
+        let renameStatusButton = event.target;
+        renameStatusButton.classList.remove('hover')
+        // just change the inner html to ""
+        renameStatusButton.innerHTML = ""
+        let input_field = '<input class="create-status-title" placeholder="Write title then press enter"/>';
+        renameStatusButton.innerHTML = (input_field);
+
+        const status_id = renameStatusButton.dataset.status;
+        let inputField = document.querySelector('.create-status-title');
+        // inputField.addEventListener('keypress', (e) => {
+        //     if (e.key === 'Enter') {
+        //
+        //     }
+        // })
     },
     hover: function (event) {
         let button = event.target
