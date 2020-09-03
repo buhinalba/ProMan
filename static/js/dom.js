@@ -51,6 +51,7 @@ export let dom = {
 
             })
         }
+        // todo add rename feature for boards
     },
     loadStatuses: function (boardId, callback){
         dataHandler.getStatuses(boardId, function(statuses){
@@ -77,6 +78,7 @@ export let dom = {
         for (let status of statuses) {
             dom.loadCards(boardId, status.id)
         }
+        // todo add rename feature to statuses
         // it adds necessary event listeners also
     },
     loadCards: function (boardId, statusId) {
@@ -101,7 +103,7 @@ export let dom = {
 
         let cardsContainer = document.querySelector(`.board[data-id="${boardId}"] .board-columns .board-column [data-status="${statusId}"]`);
         cardsContainer.insertAdjacentHTML("beforeend", outerHtml);
-
+        // todo add rename feature for cards
 
         // it adds necessary event listeners also
     },
