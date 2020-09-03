@@ -43,15 +43,12 @@ export let dom = {
         }
 
         const outerHtml = `${boardList}`;
-        const CreateBoardButton =
-            `<button class="create-board">Add New Board</button>`
 
 
         let boardsContainer = document.querySelector('.board-container');
-        boardsContainer.insertAdjacentHTML("beforeend", outerHtml);
-        boardsContainer.insertAdjacentHTML("beforebegin", CreateBoardButton);
-        let createButton = document.querySelector('.create-board')
-        createButton.addEventListener('click', dom.createBoard)
+        boardsContainer.innerHTML = outerHtml;
+        let createButton = document.querySelector('.create-board');
+        createButton.addEventListener('click', dom.createBoard);
         for (let board of boards) {
             dom.loadStatuses(board.id, function () {
 

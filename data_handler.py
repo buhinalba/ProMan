@@ -107,9 +107,9 @@ def register(cursor: RealDictCursor, username, password):
 @util.connection_handler
 def get_user(cursor: RealDictCursor, username):
     cursor.execute("""
-        SELECT * FROM user 
+        SELECT * FROM "user" 
         WHERE username like %(username)s
-        """,{'username':username})
+        """,{'username': username})
     return cursor.fetchone()
 
 
