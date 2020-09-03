@@ -46,6 +46,8 @@ export let dom = {
         boardsContainer.innerHTML = outerHtml;
         let createButton = document.querySelector('.create-board');
         createButton.addEventListener('click', dom.createBoard);
+        createButton.addEventListener('mouseover', dom.hover)
+        createButton.addEventListener('mouseleave', dom.leave)
         for (let board of boards) {
             dom.loadStatuses(board.id, function () {
 
@@ -55,6 +57,8 @@ export let dom = {
         let renameBoardButtons = document.querySelectorAll('.board-title')
         for (let renameBoardButton of renameBoardButtons) {
             renameBoardButton.addEventListener('click', dom.renameBoard)
+            renameBoardButton.addEventListener('mouseover', dom.hover)
+            renameBoardButton.addEventListener('mouseleave', dom.leave)
         }
     },
     loadStatuses: function (boardId, callback){
@@ -149,5 +153,13 @@ export let dom = {
                     }
                 }
             )
+    },
+    hover: function (event) {
+        let button = event.target
+        button.classList.add('hover')
+    },
+    leave: function (event) {
+        let button = event.target
+        button.classList.remove('hover')
     }
 };
