@@ -51,9 +51,11 @@ export let dom = {
 
             })
         }
-        let renameBoardButton = document.querySelector('.board-title')
-        renameBoardButton.addEventListener('click', dom.renameBoard)
         // todo add rename feature for boards
+        let renameBoardButtons = document.querySelectorAll('.board-title')
+        for (let renameBoardButton of renameBoardButtons) {
+            renameBoardButton.addEventListener('click', dom.renameBoard)
+        }
     },
     loadStatuses: function (boardId, callback){
         dataHandler.getStatuses(boardId, function(statuses){
@@ -132,5 +134,20 @@ export let dom = {
     renameBoard: function (event) {
         let renameBoardButton = event.target;
         renameBoardButton.classList.add('hidden')
+        const input_field = '<input class="create-board-title" placeholder="Write board title then press enter"/>'
+        renameBoardButton.insertAdjacentHTML('afterend', input_field);
+        let board_id = renameBoardButton.closest('.board').dataset.id
+        let inputField = document.querySelector(".create-board-title")
+
+        inputField.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        let board_title = e.target.value
+                        console.log(board_title)
+                        dataHandler.renameBoard(board_id, board_title, dom.loadBoards)
+                        inputField.remove()
+                        renameBoardButton.classList.remove('hidden');
+                    }
+                }
+            )
     }
 };

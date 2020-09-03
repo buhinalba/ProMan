@@ -115,6 +115,15 @@ def get_user(cursor: RealDictCursor, username):
     return cursor.fetchone()
 
 
+@util.connection_handler
+def rename_board(cursor: RealDictCursor, board_id, board_title):
+    cursor.execute("""
+        UPDATE board
+            SET title = %(board_title)s
+            WHERE id = %(board_id)s;
+        """, {'board_id': board_id, 'board_title': board_title})
+
+
 def hash_password(plain_text_password):
     # By using bcrypt, the salt is saved into the hash itself
     hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())

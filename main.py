@@ -109,6 +109,14 @@ def create_board():
     return make_response(jsonify({"message": "OK"}), 200)
 
 
+@app.route("/rename-board", methods=["POST"])
+def rename_board():
+    req = request.get_json(force=True)
+    print(req)
+    data_handler.rename_board(req['board_id'], req['board_title'])
+    return make_response(jsonify({"message": "OK"}), 200)
+
+
 def main():
     app.run(debug=True)
 
