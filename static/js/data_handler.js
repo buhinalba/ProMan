@@ -84,6 +84,10 @@ export let dataHandler = {
     renameBoard: function (board_id, board_title, callback) {
         let data = {board_id: board_id, board_title:board_title}
         this._api_post('/rename-board', data, callback)
+    },
+    renameStatus: function (status_id, status_title, callback) {
+        let data = {status_id: status_id, status_title: status_title}
+        this._api_post('/rename-status', data, callback)
     }
     // here comes more features
 };

@@ -41,7 +41,7 @@ def login():
 @app.route('/logout', methods=["GET", "POST"])
 def logout():
     session.clear()
-    return redirect(url_for("login"))
+    return redirect(url_for("index"))
 
 
 @app.route('/registration', methods=["GET", "POST"])
@@ -51,9 +51,6 @@ def register():
         data_handler.register(username, password)
         return redirect(url_for("login"))
     return render_template('registration.html')
-
-
-
 
 
 @app.route("/get-boards")
@@ -114,6 +111,14 @@ def rename_board():
     req = request.get_json(force=True)
     print(req)
     data_handler.rename_board(req['board_id'], req['board_title'])
+    return make_response(jsonify({"message": "OK"}), 200)
+
+
+@app.route("/rename-status", methods=["POST"])
+def rename_status():
+    req = request.get_json(force=True)
+    print(req)
+    data_handler.rename_status(req['status_id'], req['status_title'])
     return make_response(jsonify({"message": "OK"}), 200)
 
 

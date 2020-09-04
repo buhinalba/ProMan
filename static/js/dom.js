@@ -161,20 +161,24 @@ export let dom = {
             )
     },
     renameStatus: function (event) {
-        let renameStatusButton = event.target;
-        renameStatusButton.classList.remove('hover')
-        // just change the inner html to ""
-        renameStatusButton.innerHTML = ""
-        let input_field = '<input class="create-status-title" placeholder="Write title then press enter"/>';
-        renameStatusButton.innerHTML = (input_field);
 
-        const status_id = renameStatusButton.dataset.status;
-        let inputField = document.querySelector('.create-status-title');
-        // inputField.addEventListener('keypress', (e) => {
-        //     if (e.key === 'Enter') {
-        //
-        //     }
-        // })
+    let renameStatusButton = event.target;
+    renameStatusButton.classList.add('hidden')
+    const input_field = '<input class="create-board-title" placeholder="Write status title then press enter"/>'
+    renameStatusButton.insertAdjacentHTML('afterend', input_field);
+    let status_id = renameStatusButton.closest('.board-column-title').dataset.status
+    let inputField = document.querySelector(".create-board-title")
+
+    inputField.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    let status_title = e.target.value
+                    console.log(status_title)
+                    dataHandler.renameStatus(status_id, status_title, dom.loadBoards)
+                    inputField.remove()
+                    renameStatusButton.classList.remove('hidden');
+                }
+            }
+        )
     },
     hover: function (event) {
         let button = event.target

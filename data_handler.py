@@ -14,7 +14,7 @@ def get_boards(cursor):
     """
     query = f"""
             SELECT * FROM board
-            ORDER BY title;
+            ORDER BY id;
             """
     cursor.execute(query)
     return cursor.fetchall()
@@ -122,6 +122,15 @@ def rename_board(cursor: RealDictCursor, board_id, board_title):
             SET title = %(board_title)s
             WHERE id = %(board_id)s;
         """, {'board_id': board_id, 'board_title': board_title})
+
+
+@util.connection_handler
+def rename_status(cursor: RealDictCursor, status_id, status_title):
+    cursor.execute("""
+        UPDATE status
+            SET title = %(status_title)s
+            WHERE id = %(status_id)s;
+        """, {'status_id': status_id, 'status_title': status_title})
 
 
 def hash_password(plain_text_password):
