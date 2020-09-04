@@ -25,13 +25,14 @@ export let dom = {
 
         for(let board of boards){
             boardList += `    
+    
         
         <section class="board" data-id="${board.id}">
             <div class="board-header"><span class="board-title">${board.title}</span>
                 <button class="board-add">Add Card</button>
-                <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                <button class="board-toggle collapsed" type="button" data-toggle="collapse" data-target="#toggle-${board.id}" aria-expanded="false" aria-controls="board-columns"><i class="fas fa-chevron-down"></i></button>
             </div>
-            <div class="board-columns">
+            <div class="board-columns collapse" id="toggle-${board.id}">
                   
             </div>
         </section>
