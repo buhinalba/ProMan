@@ -66,12 +66,13 @@ section.board{
 
 .board-columns{
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 }
 
 .board-column{
     padding: 10px;
     flex: 1;
+    flex-basis: 25%;
 }
 
 .board-column-content{
@@ -88,6 +89,9 @@ section.board{
 
 .board-column-title{
     text-align: center;
+    line-break: auto;
+    word-break: break-all;
+
 }
 
 .card{
@@ -126,6 +130,8 @@ section.board{
 
 .card-title{
     padding-right: 16px;
+    line-break: auto;
+    word-break: break-all;
 }
 #title{
 margin: 18px 32px 18px 32px;

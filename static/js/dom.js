@@ -140,7 +140,7 @@ export let dom = {
         let createBoardButton = event.target;
         createBoardButton.classList.add('hidden');
 
-        const input_field = '<input class="create-board-title" placeholder="Write board title then press enter"/>'
+        const input_field = '<input class="create-board-title" type="text" minlength="1" maxlength="50" placeholder="Write board title then press enter"/>'
         createBoardButton.insertAdjacentHTML('afterend', input_field);
 
         let inputField = document.querySelector(".create-board-title")
