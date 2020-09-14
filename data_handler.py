@@ -53,7 +53,7 @@ def create_status(cursor: RealDictCursor, status_title, board_id):
 
 @util.connection_handler
 def create_board(cursor: RealDictCursor, username, board_title):
-    user_id = get_user(username)["id"]
+    user_id = get_user(username)["id"] if username else None
     cursor.execute("""
         INSERT INTO board
         VALUES (DEFAULT, %(board_title)s, %(user_id)s)

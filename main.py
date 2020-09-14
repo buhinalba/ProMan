@@ -99,7 +99,7 @@ def create_board():
     else:
         username = None
     req = request.get_json(force=True)
-    data_handler.create_board("pistike", req["board_title"])
+    data_handler.create_board(username, req["board_title"])
     max_id = data_handler.get_latest_board_id()["max"]
     print(max_id)  # return None (why???)
     data_handler.create_default_statuses(max_id)
