@@ -53,8 +53,8 @@ export let dom = {
 
             })
         }
-        let createCard = document.querySelector('.create-card');
-        createCard.addEventListener('click', dom.createCard);
+        let createCardButton = document.querySelector('.create-card');
+        createCardButton.addEventListener('click', dom.createCard);
         for (let card of boards) {
             dom.loadStatuses(board.id, function () {
 
@@ -135,11 +135,12 @@ export let dom = {
                 }
             )
     },
-    createCard: function(boardId, event){
-                let createCardButton = document.createElement('button');
+    createCard: function(event){
+                let createCardButton = event.target
                 createCardButton.classList.add('hidden');
 
                 let input_field = '<input class="create-card"/>'
                 createCardButton.insertAdjacentHTML('afterend', input_field);
+                input_field = document.querySelector(".create-card")
             }
 };
