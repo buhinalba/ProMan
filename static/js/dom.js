@@ -150,7 +150,12 @@ export let dom = {
         renameBoardButton.insertAdjacentHTML('afterend', input_field);
         let board_id = renameBoardButton.closest('.board').dataset.id
         let inputField = document.querySelector(".create-board-title")
-
+        document.addEventListener('click', (e) => {
+            if (!renameBoardButton.contains(e.target) && !(inputField === e.target)) {
+                inputField.remove()
+                renameBoardButton.classList.remove('hidden');
+            }
+        })
         inputField.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
                         let board_title = e.target.value
@@ -163,13 +168,18 @@ export let dom = {
             )
     },
     renameStatus: function (event) {
-
     let renameStatusButton = event.target;
-    renameStatusButton.classList.add('hidden')
-    const input_field = '<input class="create-board-title" placeholder="Write status title then press enter"/>'
-    renameStatusButton.insertAdjacentHTML('afterend', input_field);
-    let status_id = renameStatusButton.closest('.board-column-title').dataset.status
-    let inputField = document.querySelector(".create-board-title")
+        renameStatusButton.classList.add('hidden')
+        const input_field = '<input class="create-board-title" placeholder="Write status title then press enter"/>'
+        renameStatusButton.insertAdjacentHTML('afterend', input_field);
+        let status_id = renameStatusButton.closest('.board-column-title').dataset.status
+        let inputField = document.querySelector(".create-board-title")
+        document.addEventListener('click', (e) => {
+            if (!renameStatusButton.contains(e.target) && !(inputField === e.target)) {
+                inputField.remove()
+                renameStatusButton.classList.remove('hidden');
+            }
+        })
 
     inputField.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
