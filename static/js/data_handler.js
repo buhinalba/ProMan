@@ -92,6 +92,10 @@ export let dataHandler = {
     renameStatus: function (status_id, status_title, callback) {
         let data = {status_id: status_id, status_title: status_title}
         this._api_post('/rename-status', data, callback)
+    },
+    renameCard: function (card_title, card_id, callback) {
+        let data = {card_title: card_title, card_id: card_id}
+        this._api_post('/rename-card', data, callback)
     }
     // here comes more features
 };
