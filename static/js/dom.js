@@ -116,7 +116,7 @@ export let dom = {
 
         for(let card of cards){
             cardsList += `    
-                        <div class="card">
+                        <div class="card" data-order="${card.order}">
                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
                             <div class="card-title">${card.title}</div>
                         </div>
@@ -128,6 +128,10 @@ export let dom = {
         let cardsContainer = document.querySelector(`.board[data-id="${boardId}"] .board-columns .board-column [data-status="${statusId}"]`);
         cardsContainer.insertAdjacentHTML("beforeend", outerHtml);
 
+        const cardElements = document.querySelectorAll('.card')
+        for(let card of cardElements) {
+            card.style.order = card.dataset.order;
+        }
         // it adds necessary event listeners also
     },
     // here comes more features
