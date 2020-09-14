@@ -154,8 +154,9 @@ export let dom = {
         inputField.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
                         let board_title = e.target.value
-                        dataHandler.renameBoard(board_id, board_title, dom.loadBoards)
+                        dataHandler.renameBoard(board_id, board_title, () => {})
                         inputField.remove()
+                        renameBoardButton.innerHTML = board_title
                         renameBoardButton.classList.remove('hidden');
                     }
                 }
@@ -174,8 +175,9 @@ export let dom = {
                 if (e.key === 'Enter') {
                     let status_title = e.target.value
                     console.log(status_title)
-                    dataHandler.renameStatus(status_id, status_title, dom.loadBoards)
+                    dataHandler.renameStatus(status_id, status_title, () => {})
                     inputField.remove()
+                    renameStatusButton.innerHTML = status_title
                     renameStatusButton.classList.remove('hidden');
                 }
             }
