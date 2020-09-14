@@ -141,7 +141,7 @@ def rename_status(cursor: RealDictCursor, status_id, status_title):
 
 
 @util.connection_handler
-def rename_card(cursor: RealDictCursor, card_id, card_title):
+def rename_card(cursor: RealDictCursor, card_title, card_id):
     query = """
                 UPDATE card
                 SET title = %(card_title)s
