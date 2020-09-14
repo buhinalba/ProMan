@@ -136,10 +136,10 @@ export let dom = {
             )
     },
     createCard: function(boardId, event){
-                let createCardButton = event.target;
+                let createCardButton = document.createElement('button');
                 createCardButton.classList.add('hidden');
 
-                const input_field = '<input class="create-card"/>'
+                let input_field = '<input class="create-card"/>'
                 createCardButton.insertAdjacentHTML('afterend', input_field);
             }
 };
