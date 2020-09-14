@@ -125,8 +125,14 @@ def rename_board():
 @app.route("/rename-status", methods=["POST"])
 def rename_status():
     req = request.get_json(force=True)
-    print(req)
     data_handler.rename_status(req['status_id'], req['status_title'])
+    return make_response(jsonify({"message": "OK"}), 200)
+
+
+@app.route("/rename-card", methods=["POST"])
+def rename_card():
+    req = request.get_json(force=True)
+    data_handler.rename_card(req['card_title'], req['card_id'])
     return make_response(jsonify({"message": "OK"}), 200)
 
 
