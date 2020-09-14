@@ -110,9 +110,10 @@ def create_board():
 
 
 @app.route("/create-card", methods=["POST"])
+@json_response
 def create_card():
     req = request.get_json(force=True)
-    data_handler.create_card("pistike", req["card_title"])
+    data_handler.create_card(req["board_id"], req["card_title"], req["status_id"])
     return make_response(jsonify({"message": "OK"}), 200)
 
 

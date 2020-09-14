@@ -53,6 +53,13 @@ export let dom = {
 
             })
         }
+        let createCard = document.querySelector('.create-card');
+        createCard.addEventListener('click', dom.createCard);
+        for (let card of boards) {
+            dom.loadStatuses(board.id, function () {
+
+            })
+        }
     },
     loadStatuses: function (boardId, callback){
         dataHandler.getStatuses(boardId, function(statuses){
