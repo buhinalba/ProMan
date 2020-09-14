@@ -120,7 +120,7 @@ export let dom = {
     
                         <div class="card" data-order="${card.order}">
                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
-                            <div class="card-title">${card.title}</div>
+                            <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                         </div>
             `;
         }
@@ -129,7 +129,12 @@ export let dom = {
 
         let cardsContainer = document.querySelector(`.board[data-id="${boardId}"] .board-columns .board-column [data-status="${statusId}"]`);
         cardsContainer.insertAdjacentHTML("beforeend", outerHtml);
-
+        let renameCardButtons = document.querySelectorAll('.card-title')
+        for (let renameCardButton of renameCardButtons) {
+            renameCardButton.addEventListener('click', dom.renameCard)
+            renameCardButton.addEventListener('mouseover', dom.hover)
+            renameCardButton.addEventListener('mouseleave', dom.leave)
+        }
         // it adds necessary event listeners also
     },
     // here comes more features
@@ -219,6 +224,32 @@ export let dom = {
                     inputField.remove()
                     renameStatusButton.innerHTML = status_title
                     renameStatusButton.classList.remove('hidden');
+                }
+            }
+        )
+    },
+    renameCard: function(event){
+        let renameCardButton = event.target;
+        renameCardButton.classList.add('hidden')
+        const input_field = '<input class="create-board-title" placeholder="Write card title then press enter"/>'
+        renameCardButton.insertAdjacentHTML('afterend', input_field);
+        let card_id = renameCardButton.closest('.card-title').dataset.cardId;
+        let inputField = document.querySelector(".create-board-title")
+        document.addEventListener('click', (e) => {
+            if (!renameCardButton.contains(e.target) && !(inputField === e.target)) {
+                inputField.remove()
+                renameCardButton.classList.remove('hidden');
+            }
+        })
+
+    inputField.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    let card_title = e.target.value
+                    console.log(card_title)
+                    dataHandler.renameCard(card_title, card_id, () => {})
+                    inputField.remove()
+                    renameCardButton.innerHTML = card_title
+                    renameCardButton.classList.remove('hidden');
                 }
             }
         )
