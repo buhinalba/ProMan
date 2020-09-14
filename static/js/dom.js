@@ -29,6 +29,7 @@ export let dom = {
         
         <section class="board" data-id="${board.id}">
             <div class="board-header"><span class="board-title">${board.title}</span>
+                <button class="board-add-status">Add Status</button>
                 <button class="board-add">Add Card</button>
                 <button class="board-toggle collapsed" type="button" data-toggle="collapse" data-target="#toggle-${board.id}" aria-expanded="false" aria-controls="board-columns"><i class="fas fa-chevron-down"></i></button>
             </div>
@@ -47,8 +48,15 @@ export let dom = {
         boardsContainer.innerHTML = outerHtml;
         let createButton = document.querySelector('.create-board');
         createButton.addEventListener('click', dom.createBoard);
-        createButton.addEventListener('mouseover', dom.hover)
-        createButton.addEventListener('mouseleave', dom.leave)
+        createButton.addEventListener('mouseover', dom.hover);
+        createButton.addEventListener('mouseleave', dom.leave);
+        let createStatusButtons = document.querySelectorAll('.board-add-status');
+        for (let statusButton of createStatusButtons) {
+            statusButton.addEventListener('click', dom.createStatus);
+            statusButton.addEventListener('mouseover', dom.hover);
+            statusButton.addEventListener('mouseleave', dom.leave);
+        }
+
         for (let board of boards) {
             dom.loadStatuses(board.id, function () {
 
@@ -142,6 +150,26 @@ export let dom = {
                     }
                 }
             )
+    },
+    createStatus: function(evt){
+        let createStatusButton = evt.target;
+        createStatusButton.classList.add('hidden');
+        const input_field = '<input class="create-board-title" placeholder="Write status title then press enter"/>'
+        createStatusButton.insertAdjacentHTML('afterend', input_field);
+        let inputField = document.querySelector(".create-board-title")
+        inputField.addEventListener('keypress', (e) => {
+                    console.log(e.key)
+                    if (e.key === 'Enter') {
+                        let status_title = e.target.value;
+                        let board_id = evt.target.closest('section').dataset.id;
+                        console.log(status_title)
+                        dataHandler.createNewStatus(status_title, board_id, dom.loadBoards)
+                        inputField.remove()
+                        createStatusButton.classList.remove('hidden');
+                    }
+                }
+            )
+
     },
     renameBoard: function (event) {
         let renameBoardButton = event.target;

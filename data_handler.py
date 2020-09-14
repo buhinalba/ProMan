@@ -43,6 +43,15 @@ def get_statuses(cursor, board_id):
 
 
 @util.connection_handler
+def create_status(cursor: RealDictCursor, status_title, board_id):
+    query = """
+                INSERT INTO status (title, board_id)
+                VALUES (%(status_title)s, %(board_id)s);
+                """
+    cursor.execute(query, {'status_title': status_title, 'board_id': board_id})
+
+
+@util.connection_handler
 def create_board(cursor: RealDictCursor, username, board_title):
     user_id = get_user(username)["id"]
     cursor.execute("""

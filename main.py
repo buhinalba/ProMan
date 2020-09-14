@@ -106,6 +106,14 @@ def create_board():
     return make_response(jsonify({"message": "OK"}), 200)
 
 
+@app.route('/create-status', methods=['POST'])
+def create_status():
+    username = session.get('username', None)
+    req = request.get_json(force=True)
+    data_handler.create_status(req["status_title"], req["board_id"])
+    return make_response(jsonify({"message": "OK"}), 200)
+
+
 @app.route("/rename-board", methods=["POST"])
 def rename_board():
     req = request.get_json(force=True)
