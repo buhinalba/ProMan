@@ -9,7 +9,8 @@
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="password" name="password" required>
+        <input type="password" class="form-control password" id="password" placeholder="password" name="password" required>
+        <a class="password-toggle">&#128065</a>
       </div>
     <div/>
     {% for category, message in get_flashed_messages(with_categories=True) %}
@@ -18,4 +19,7 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
+
+<script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
 {% endblock %}

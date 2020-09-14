@@ -3,12 +3,15 @@ import { dataHandler } from "./data_handler.js";
 
 export let dom = {
     init: function () {
-        // This function should run once, when the page is loaded.
-        //main szerű használat:
-            // loadBoards
-            // showBoards
-            // loadCards
-            // showCards
+        dom.loadBoards()
+        const passwordToggle = document.querySelector('.password-toggle')
+        console.log(passwordToggle)
+        if (passwordToggle) {
+            console.log(passwordToggle)
+            passwordToggle.addEventListener('click', dom.togglePassword)
+            passwordToggle.addEventListener('mouseover', dom.hover);
+            passwordToggle.addEventListener('mouseleave', dom.leave);
+        }
 
     },
     loadBoards: function () {
@@ -261,5 +264,15 @@ export let dom = {
     leave: function (event) {
         let button = event.target
         button.classList.remove('hover')
+    },
+
+    togglePassword: function (event) {
+        event.preventDefault()
+        const passwordElement = document.querySelector('.password')
+        if (passwordElement.type === 'text') {
+            passwordElement.type = 'password'
+        } else {
+            passwordElement.type = 'text'
+        }
     }
 };
