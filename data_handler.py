@@ -3,8 +3,6 @@ from psycopg2.extras import RealDictCursor
 import bcrypt
 from flask import redirect
 
-# TODO what's the difference, and where to use cursor/RealDictCursor
-
 
 @util.connection_handler
 def get_boards(cursor):
@@ -42,6 +40,15 @@ def get_statuses(cursor, board_id):
 
     cursor.execute(query, {"board_id": board_id})
     return cursor.fetchall()
+
+
+@util.connection_handler
+def create_status(cursor: RealDictCursor, status_title, board_id):
+    query = """
+                INSERT INTO status (title, board_id)
+                VALUES (%(status_title)s, %(board_id)s);
+                """
+    cursor.execute(query, {'status_title': status_title, 'board_id': board_id})
 
 
 @util.connection_handler
