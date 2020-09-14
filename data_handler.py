@@ -3,8 +3,6 @@ from psycopg2.extras import RealDictCursor
 import bcrypt
 from flask import redirect
 
-# TODO what's the difference, and where to use cursor/RealDictCursor
-
 
 @util.connection_handler
 def get_boards(cursor):
