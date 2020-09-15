@@ -146,6 +146,12 @@ def create_card():
     return make_response(jsonify({"message": "OK"}), 200)
 
 
+@app.route("/delete-card", methods=["POST"])
+def delete_card():
+    req = request.get_json()
+    data_handler.delete_card(req["status_id"])
+    return make_response(jsonify({"message": "OK"}), 200)
+
 
 def main():
     app.run(debug=True)

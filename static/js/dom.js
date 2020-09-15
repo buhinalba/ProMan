@@ -144,7 +144,6 @@ export let dom = {
             renameCardButton.addEventListener('mouseover', dom.hover)
             renameCardButton.addEventListener('mouseleave', dom.leave)
         }
-        dom.addDragula(status, boardId)
 
     },
     
@@ -311,13 +310,5 @@ export let dom = {
 
 
             },
-    addDragula: function(status, boardId){
-        dragula(status)
-            .on('drop', function(el)){
-            dom.saveCardOrder(boardId);
-        }
-    },
-    saveCardOrder(boardId) {
-        
-    }
+
 };
