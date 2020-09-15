@@ -7,7 +7,6 @@
 }
 
 body{
-    min-width: 620px;
     background: #ddd url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/diagonal-noise.png);
     font-family: sans-serif;
 }
@@ -165,6 +164,7 @@ margin: 18px 32px 18px 32px;
 
 .create-board {
     border-radius: 5px;
+    margin-top: 16px;
 }
 
 .create-board-title {
