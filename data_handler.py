@@ -158,6 +158,17 @@ def rename_card(cursor: RealDictCursor, card_title, card_id):
     cursor.execute(query, {'card_title': card_title, 'card_id': card_id})
 
 
+@util.connection_handler
+def delete_card(cursor: RealDictCursor, card_id):
+    query = """
+            DELETE
+            FROM card
+            WHERE id = %(card_id)s;
+            """
+    cursor.execute(query, {'card_id': card_id})
+
+
+
 def hash_password(plain_text_password):
     # By using bcrypt, the salt is saved into the hash itself
     hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
