@@ -71,11 +71,6 @@ export let dom = {
             button.addEventListener('click', dom.createCard);
         }
 
-        for (let board of boards) {
-            dom.loadStatuses(board.id, function () {
-
-            })
-        }
         // todo add rename feature for boards
         let renameBoardButtons = document.querySelectorAll('.board-title')
         for (let renameBoardButton of renameBoardButtons) {
@@ -234,9 +229,9 @@ export let dom = {
                 if (e.key === 'Enter') {
                     let status_title = e.target.value
                     console.log(status_title)
-                    dataHandler.renameStatus(status_id, status_title, () => {})
+                    dataHandler.renameStatus(status_id, status_title,
+                        () => {renameStatusButton.innerHTML = status_title})
                     inputField.remove()
-                    renameStatusButton.innerHTML = status_title
                     renameStatusButton.classList.remove('hidden');
                 }
             }
