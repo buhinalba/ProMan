@@ -56,8 +56,8 @@ def create_board(cursor: RealDictCursor, username, board_title):
 @util.connection_handler
 def create_card(cursor: RealDictCursor, board_id, card_title, status_id):
     cursor.execute("""
-        INSERT INTO card
-        VALUES (DEFAULT, %(board_id)s, %(card_title)s, %(status_id)s, DEFAULT)
+        INSERT INTO card(id, board_id, title, status_id, "order")
+        VALUES (DEFAULT, %(board_id)s, %(card_title)s, %(status_id)s, 1)
     """, {'board_id': board_id, 'card_title': card_title, 'status_id': status_id})
 
 

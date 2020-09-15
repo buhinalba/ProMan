@@ -53,9 +53,12 @@ export let dom = {
 
             })
         }
-        let createCardButton = document.querySelector('.create-card');
-        createCardButton.addEventListener('click', dom.createCard);
-        for (let card of boards) {
+        let createCardButtons = document.querySelectorAll('.create-card');
+        for (let button of createCardButtons){
+            button.addEventListener('click', dom.createCard);
+        }
+
+        for (let board of boards) {
             dom.loadStatuses(board.id, function () {
 
             })
@@ -136,11 +139,28 @@ export let dom = {
             )
     },
     createCard: function(event){
-                let createCardButton = event.target
+                let createCardButton = event.target;
+                let board = createCardButton.closest("section.board")
+                let boardID = board.dataset.id
+                let statusID = board.querySelector(".board-column-title").dataset.status
                 createCardButton.classList.add('hidden');
 
-                let input_field = '<input class="create-card"/>'
+                const input_field = '<input class="create-card-title" placeholder="Write down the Card title then press enter"/>'
                 createCardButton.insertAdjacentHTML('afterend', input_field);
-                input_field = document.querySelector(".create-card")
+                let inputField = document.querySelector(".create-card-title");
+                inputField.addEventListener('keypress', (e) => {
+                    console.log(e.key)
+                    if (e.key === 'Enter') {
+                        let card_title = e.target.value
+                        console.log(card_title)
+                        dataHandler.createCard(card_title, boardID, statusID, dom.loadCards)
+                        inputField.remove()
+                        createCardButton.classList.remove('hidden');
+                    }
+                })
+
+
+
+
             }
 };

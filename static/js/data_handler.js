@@ -78,8 +78,7 @@ export let dataHandler = {
         // is event handler should trigger this function, the use fetch with post method, the
         // callback to print??
     },
-    creatCard: function (cardTitle, boardId, statusId, callback) {
-        // creates new card, saves it and calls the callback function with its data
+    createCard: function (cardTitle, boardId, statusId, callback) {
         let data = {card_title: cardTitle, board_id: boardId, status_id: statusId}
         this._api_post("/create-card", data, callback)
     }
