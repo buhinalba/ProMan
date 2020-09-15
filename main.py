@@ -53,6 +53,9 @@ def register():
     return render_template('registration.html')
 
 
+
+
+
 @app.route("/get-boards")
 @json_response
 def get_boards():
@@ -134,6 +137,14 @@ def rename_card():
     req = request.get_json(force=True)
     data_handler.rename_card(req['card_title'], req['card_id'])
     return make_response(jsonify({"message": "OK"}), 200)
+
+
+@app.route("/create-card", methods=["POST"])
+def create_card():
+    req = request.get_json()
+    data_handler.create_card(req["board_id"], req["card_title"], req["status_id"])
+    return make_response(jsonify({"message": "OK"}), 200)
+
 
 
 def main():

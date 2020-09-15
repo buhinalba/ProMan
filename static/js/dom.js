@@ -33,8 +33,9 @@ export let dom = {
         <section class="board" data-id="${board.id}">
             <div class="board-header"><span class="board-title">${board.title}</span>
                 <button class="board-add-status">Add Status</button>
-                <button class="board-add">Add Card</button>
+      
                 <button class="board-toggle collapsed" type="button" data-toggle="collapse" data-target="#toggle-${board.id}" aria-expanded="false" aria-controls="board-columns"><i class="fas fa-chevron-down"></i></button>
+                <button class="create-card">Create Card</button>
             </div>
             <div class="board-columns collapse" id="toggle-${board.id}">
                   
@@ -58,6 +59,16 @@ export let dom = {
             statusButton.addEventListener('click', dom.createStatus);
             statusButton.addEventListener('mouseover', dom.hover);
             statusButton.addEventListener('mouseleave', dom.leave);
+        }
+
+        for (let board of boards) {
+            dom.loadStatuses(board.id, function () {
+
+            })
+        }
+        let createCardButtons = document.querySelectorAll('.create-card');
+        for (let button of createCardButtons){
+            button.addEventListener('click', dom.createCard);
         }
 
         for (let board of boards) {
@@ -274,5 +285,31 @@ export let dom = {
         } else {
             passwordElement.type = 'text'
         }
-    }
+
+    },
+    createCard: function(event){
+                let createCardButton = event.target;
+                let board = createCardButton.closest("section.board")
+                let boardID = board.dataset.id
+                let statusID = board.querySelector(".board-column-title").dataset.status
+                createCardButton.classList.add('hidden');
+
+                const input_field = '<input class="create-card-title" placeholder="Write down the Card title then press enter"/>'
+                createCardButton.insertAdjacentHTML('afterend', input_field);
+                let inputField = document.querySelector(".create-card-title");
+                inputField.addEventListener('keypress', (e) => {
+                    console.log(e.key)
+                    if (e.key === 'Enter') {
+                        let card_title = e.target.value
+                        console.log(card_title)
+                        dataHandler.createCard(card_title, boardID, statusID, dom.loadCards)
+                        inputField.remove()
+                        createCardButton.classList.remove('hidden');
+                    }
+                })
+
+
+
+
+            }
 };
