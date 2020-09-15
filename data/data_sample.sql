@@ -67,29 +67,29 @@ ALTER TABLE ONLY status
     ADD CONSTRAINT fk_board_id FOREIGN KEY (board_id) REFERENCES board(id);
 
 -- password of user: '1111'
-INSERT INTO "user" VALUES (1, 'pistike', '$2b$12$eW00pz93SL0sVCSsNg0pAupoYv9F3dhjURUxmsp9AiWswzIu4YRAi');
+INSERT INTO "user" VALUES (DEFAULT, 'pistike', '$2b$12$eW00pz93SL0sVCSsNg0pAupoYv9F3dhjURUxmsp9AiWswzIu4YRAi');
 
-INSERT INTO board VALUES(1,'Board 1', 1);
-INSERT INTO board VALUES(2,'Board 2', 1);
+INSERT INTO board VALUES(DEFAULT,'Board 1', 1);
+INSERT INTO board VALUES(DEFAULT,'Board 2', 1);
 
-INSERT INTO status VALUES(0,'new', 1);
-INSERT INTO status VALUES(1,'in progress', 1);
-INSERT INTO status VALUES(2,'testing', 1);
-INSERT INTO status VALUES(3,'done', 1);
-INSERT INTO status VALUES(4,'new', 2);
-INSERT INTO status VALUES(5,'in progress', 2);
-INSERT INTO status VALUES(6,'testing', 2);
-INSERT INTO status VALUES(7,'done', 2);
+INSERT INTO status VALUES(DEFAULT,'new', 1);
+INSERT INTO status VALUES(DEFAULT,'in progress', 1);
+INSERT INTO status VALUES(DEFAULT,'testing', 1);
+INSERT INTO status VALUES(DEFAULT,'done', 1);
+INSERT INTO status VALUES(DEFAULT,'new', 2);
+INSERT INTO status VALUES(DEFAULT,'in progress', 2);
+INSERT INTO status VALUES(DEFAULT,'testing', 2);
+INSERT INTO status VALUES(DEFAULT,'done', 2);
 
-INSERT INTO card VALUES (1,1,'new card 1',0,0);
-INSERT INTO card VALUES (2,1,'new card 2',0,1);
-INSERT INTO card VALUES (3,1, 'in progress card',1,0);
-INSERT INTO card VALUES (4,1,'planning',2,0);
-INSERT INTO card VALUES(5,1,'done card 1',3,0);
-INSERT INTO card VALUES(6,1,'done card 1',3,1);
-INSERT INTO card VALUES(7,2,'new card 1',0,0);
-INSERT INTO card VALUES(8,2,'new card 2',0,1);
-INSERT INTO card VALUES(9,2,'in progress card',1,0);
-INSERT INTO card VALUES(10,2,'planning',2,0);
-INSERT INTO card VALUES(11,2,'done card 1',3,0);
-INSERT INTO card VALUES(12,2,'done card 1',3,1);
+INSERT INTO card VALUES (DEFAULT,1,'new card 1',1,0);
+INSERT INTO card VALUES (DEFAULT,1,'new card 2',1,1);
+INSERT INTO card VALUES (DEFAULT,1, 'in progress card',2,0);
+INSERT INTO card VALUES (DEFAULT,1,'planning',3,0);
+INSERT INTO card VALUES(DEFAULT,1,'done card 1',4,0);
+INSERT INTO card VALUES(DEFAULT,1,'done card 1',4,1);
+INSERT INTO card VALUES(DEFAULT,2,'new card 1',1,0);
+INSERT INTO card VALUES(DEFAULT,2,'new card 2',1,1);
+INSERT INTO card VALUES(DEFAULT,2,'in progress card',2,0);
+INSERT INTO card VALUES(DEFAULT,2,'planning',3,0);
+INSERT INTO card VALUES(DEFAULT,2,'done card 1',4,0);
+INSERT INTO card VALUES(DEFAULT,2,'done card 1',4,1);
