@@ -118,6 +118,16 @@ export let dataHandler = {
         let data = {card_title: card_title, card_id: card_id}
         this._api_post('/rename-card', data, callback)
     },
+    deleteBoard: function (board_id, callback){
+        this._api_get(`/delete-board/${board_id}`, (response)=>{
+            callback(response)
+        })
+    },
+    deleteStatus: function (status_id, callback){
+        this._api_get(`/delete-status/${status_id}`, (response)=>{
+            callback(response)
+        })
+    },
     deleteCard: function (card_id, callback){
         this._api_get(`/delete-card/${card_id}`, (response)=>{
             callback(response)

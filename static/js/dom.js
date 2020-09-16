@@ -32,8 +32,8 @@ export let dom = {
         
         <section class="board" data-id="${board.id}">
             <div class="board-header"><span class="board-title">${board.title}</span>
+                <div class="board-remove" data-id="${status.id}"><i class="fas fa-trash-alt"></i></div>
                 <button class="board-add-status">Add Status</button>
-      
                 <button class="board-toggle collapsed" type="button" data-toggle="collapse" data-target="#toggle-${board.id}" aria-expanded="false" aria-controls="board-columns"><i class="fas fa-chevron-down"></i></button>
                 <button class="create-card">Create Card</button>
             </div>
@@ -78,6 +78,10 @@ export let dom = {
             renameBoardButton.addEventListener('mouseover', dom.hover)
             renameBoardButton.addEventListener('mouseleave', dom.leave)
         }
+        let deleteButton = document.querySelectorAll(".board-remove")
+        for (let deleteButtonElement of deleteButton) {
+            deleteButtonElement.addEventListener('click', dom.deleteBoard)
+        }
     },
     loadStatuses: function (boardId, callback) {
         dataHandler.getStatuses(boardId, function (statuses) {
@@ -93,9 +97,10 @@ export let dom = {
             statusList += `
                     <div class="board-column" id="board-${boardId}-status-${status.id}">    
                         <div class="board-column-title" data-status="${status.id}">
-                        <div class="status-title">${status.title}</div></div>
+                            <div class="status-remove" data-id="${status.id}"><i class="fas fa-trash-alt"></i></div>
+                            <div class="status-title">${status.title}</div>
+                        </div>
                         <div class="card-container">
-                            
                         </div>
                     </div>
             `;
@@ -112,7 +117,7 @@ export let dom = {
             columns.push(cardsContainer)
 
         }
-        console.log(columns);
+
         dragula(columns, {
             revertOnSpill: true
         }).on('drop', function (el) {
@@ -124,6 +129,11 @@ export let dom = {
             renameStatusButton.addEventListener('click', dom.renameStatus)
             renameStatusButton.addEventListener('mouseover', dom.hover)
             renameStatusButton.addEventListener('mouseleave', dom.leave)
+        }
+
+        let deleteButton = document.querySelectorAll(".status-remove")
+        for (let deleteButtonElement of deleteButton) {
+            deleteButtonElement.addEventListener('click', dom.deleteStatus)
         }
         // it adds necessary event listeners also
     },
@@ -202,6 +212,27 @@ export let dom = {
             }
         )
 
+    },
+    createCard: function (event) {
+        let createCardButton = event.target;
+        let board = createCardButton.closest("section.board")
+        let boardID = board.dataset.id
+        let statusID = board.querySelector(".board-column-title").dataset.status
+        createCardButton.classList.add('hidden');
+
+        const input_field = '<input class="create-card-title" placeholder="Write down the Card title then press enter"/>'
+        createCardButton.insertAdjacentHTML('afterend', input_field);
+        let inputField = document.querySelector(".create-card-title");
+        inputField.addEventListener('keypress', (e) => {
+            console.log(e.key)
+            if (e.key === 'Enter') {
+                let card_title = e.target.value
+                console.log(card_title)
+                dataHandler.createCard(card_title, boardID, statusID, dom.loadBoards)
+                inputField.remove()
+                createCardButton.classList.remove('hidden');
+            }
+        })
     },
     renameBoard: function (event) {
         let renameBoardButton = event.target;
@@ -302,25 +333,28 @@ export let dom = {
         }
 
     },
-    createCard: function (event) {
-        let createCardButton = event.target;
-        let board = createCardButton.closest("section.board")
-        let boardID = board.dataset.id
-        let statusID = board.querySelector(".board-column-title").dataset.status
-        createCardButton.classList.add('hidden');
-
-        const input_field = '<input class="create-card-title" placeholder="Write down the Card title then press enter"/>'
-        createCardButton.insertAdjacentHTML('afterend', input_field);
-        let inputField = document.querySelector(".create-card-title");
-        inputField.addEventListener('keypress', (e) => {
-            console.log(e.key)
-            if (e.key === 'Enter') {
-                let card_title = e.target.value
-                console.log(card_title)
-                dataHandler.createCard(card_title, boardID, statusID, dom.loadBoards)
-                inputField.remove()
-                createCardButton.classList.remove('hidden');
-            }
+    deleteBoard: function (event) {
+        let deleteBoardButton = event.target.closest('.board')
+        let board_id = deleteBoardButton.dataset.id
+        console.log(board_id)
+        document.addEventListener('click', (e) => {
+            dataHandler.deleteBoard(board_id, () => {
+                deleteBoardButton.remove()
+                ;
+            })
+        })
+    },
+    deleteStatus: function (event) {
+        let deleteStatusButton = event.target.parentNode
+        let status_id = deleteStatusButton.dataset.id
+        console.log(status_id)
+        document.addEventListener('click', (e) => {
+            dataHandler.deleteStatus(status_id, () => {
+                let statusToDelete = deleteStatusButton.parentNode;
+                let cardsContainer = statusToDelete.parentNode;
+                cardsContainer.remove()
+                statusToDelete.remove()
+            })
         })
     },
     deleteCard: function (event) {
@@ -331,7 +365,6 @@ export let dom = {
                 let cardToDelete = deleteCardButton.parentNode
                 cardToDelete.remove()
             })
-
         })
     }
 };

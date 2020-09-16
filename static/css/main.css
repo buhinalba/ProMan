@@ -90,6 +90,7 @@ section.board{
 
 .board-column-title{
     text-align: center;
+    min-width: 30px;
 }
 
 .card{
@@ -125,7 +126,16 @@ section.board{
     font-size: 12px;
     cursor: pointer;
 }
-
+.board-remove {
+    cursor: pointer;
+    float: left;
+    margin-top: 18px;
+    margin-left: 8px;
+}
+.status-remove{
+    color: darkslategrey;
+    cursor: pointer;
+}
 .card-title{
     padding-right: 16px;
 }

@@ -158,6 +158,44 @@ def rename_card(cursor: RealDictCursor, card_title, card_id):
 
 
 @util.connection_handler
+def delete_board(cursor: RealDictCursor, board_id):
+    query = """
+            DELETE
+            FROM card
+            WHERE board_id = %(board_id)s;
+            """
+    cursor.execute(query, {'board_id': board_id}),
+    query1 = """
+            DELETE
+            FROM status
+            WHERE board_id = %(board_id)s;
+            """
+    cursor.execute(query1, {'board_id': board_id}),
+    query2 = """
+                DELETE
+                FROM board
+                WHERE id = %(board_id)s;
+                """
+    cursor.execute(query2, {'board_id': board_id})
+
+
+@util.connection_handler
+def delete_status(cursor: RealDictCursor, status_id):
+    query = """
+            DELETE
+            FROM card
+            WHERE status_id = %(status_id)s;
+            """
+    cursor.execute(query, {'status_id': status_id}),
+    query1 = """
+            DELETE
+            FROM status
+            WHERE id = %(status_id)s;
+            """
+    cursor.execute(query1, {'status_id': status_id})
+
+
+@util.connection_handler
 def delete_card(cursor: RealDictCursor, card_id):
     query = """
             DELETE
