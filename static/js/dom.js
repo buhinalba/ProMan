@@ -71,6 +71,7 @@ export let dom = {
             button.addEventListener('click', dom.createCard);
         }
 
+
         // todo add rename feature for boards
         let renameBoardButtons = document.querySelectorAll('.board-title')
         for (let renameBoardButton of renameBoardButtons) {
@@ -91,8 +92,12 @@ export let dom = {
 
         for(let status of statuses){
             statusList += `
-                    <div class="board-column">    
-                        <div class="board-column-title" data-status="${status.id}"><div class="status-title">${status.title}</div></div>
+                    <div class="board-column" id="board-${boardId}-status-${status.id}">    
+                        <div class="board-column-title" data-status="${status.id}">
+                        <div class="status-title">${status.title}</div></div>
+                        <div class="card-container">
+                            
+                        </div>
                     </div>
             `;
         }
@@ -101,10 +106,19 @@ export let dom = {
 
         let statusContainer = document.querySelector(`.board[data-id="${boardId}"] .board-columns`);
         statusContainer.insertAdjacentHTML("beforeend", outerHtml);
+        let columns = [];
         for (let status of statuses) {
-            dom.loadCards(boardId, status.id)
+            dom.loadCards(boardId, status.id);
+            let cardsContainer = document.querySelector(`#board-${boardId}-status-${status.id} > div.card-container`);
+            columns.push(cardsContainer)
+
         }
-        // todo add rename feature to statuses
+        console.log(columns);
+        dragula(columns, {
+                revertOnSpill: true
+            }).on('drop', function(el) {
+                console.log('dropped')
+            });
 
         let renameStatusButtons = document.querySelectorAll('.status-title')
         for (let renameStatusButton of renameStatusButtons) {
@@ -113,7 +127,9 @@ export let dom = {
             renameStatusButton.addEventListener('mouseleave', dom.leave)
         }
         // it adds necessary event listeners also
+
     },
+
     loadCards: function (boardId, statusId) {
             dataHandler.getBoard(boardId, statusId, function(cards) {
                 dom.showCards(boardId, statusId, cards);
@@ -136,7 +152,7 @@ export let dom = {
 
         const outerHtml = `${cardsList}`;
 
-        let cardsContainer = document.querySelector(`.board[data-id="${boardId}"] .board-columns .board-column [data-status="${statusId}"]`);
+        let cardsContainer = document.querySelector(`#board-${boardId}-status-${statusId} > div.card-container`);
         cardsContainer.insertAdjacentHTML("beforeend", outerHtml);
         let renameCardButtons = document.querySelectorAll('.card-title')
         for (let renameCardButton of renameCardButtons) {
@@ -185,6 +201,7 @@ export let dom = {
                     }
                 }
             )
+
 
     },
     renameBoard: function (event) {
@@ -301,10 +318,6 @@ export let dom = {
                         inputField.remove()
                         createCardButton.classList.remove('hidden');
                     }
-                })
-
-
-
-
+                });
             }
 };
