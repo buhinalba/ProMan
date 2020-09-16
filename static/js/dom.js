@@ -128,7 +128,7 @@ export let dom = {
             cardsList += `    
     
                         <div class="card" data-order="${card.order}">
-                            <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                            <div class="card-remove" data-id="${card.id}"><i class="fas fa-trash-alt"></i></div>
                             <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                         </div>
             `;
@@ -144,7 +144,10 @@ export let dom = {
             renameCardButton.addEventListener('mouseover', dom.hover)
             renameCardButton.addEventListener('mouseleave', dom.leave)
         }
-
+        let deleteButton = document.querySelectorAll(".card-remove")
+        for (let deleteButtonElement of deleteButton) {
+            deleteButtonElement.addEventListener('click', dom.deleteCard)
+        }
     },
     
     
@@ -305,10 +308,15 @@ export let dom = {
                         createCardButton.classList.remove('hidden');
                     }
                 })
-
-
-
-
             },
+    deleteCard: function(event){
+        let deleteCardButton = event.target
+        let card_id = deleteCardButton.dataset.id
+        document.addEventListener('click', (e) => {
+           dataHandler.deleteCard(card_id, ()=>{
 
+           });
+
+        })
+    },
 };

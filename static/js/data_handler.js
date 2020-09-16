@@ -32,6 +32,23 @@ export let dataHandler = {
                 console.log("Fetch error: " + error);
             });
     },
+    _api_delete: function (url, data, callback) {
+        // it is not called from outside
+        // sends the data to the API, and calls callback function
+
+        fetch(url, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data),
+            credentials: "same-origin"
+        })
+            .then(response => response.json())  // parse the response as JSON
+            .then(json_response => callback(json_response))
+            .catch(error => {
+                console.log("Fetch error: " + error);
+            });
+    },
+
     init: function () {
     },
     getBoards: function (callback) {
@@ -100,6 +117,11 @@ export let dataHandler = {
     renameCard: function (card_title, card_id, callback) {
         let data = {card_title: card_title, card_id: card_id}
         this._api_post('/rename-card', data, callback)
-    }
+    },
+    deleteCard: function (card_id, callback){
+        let data = {card_id: card_id}
+        this._api_delete('/delete-card', data, callback)
+    },
+
     // here comes more features
 };
