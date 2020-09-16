@@ -15,7 +15,10 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-        <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dragula.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dragula.min.css') }}">
+
+
     </head>
     <body>
     <h1>ProMan</h1>
@@ -27,5 +30,7 @@
     <div class="board-container">
 
     </div>
+    <script type="module" src="{{ url_for('static', filename='js/dragula.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
     </body>
 </html>
