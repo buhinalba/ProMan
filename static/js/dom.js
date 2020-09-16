@@ -1,5 +1,5 @@
 // It uses data_handler.js to visualize elements
-import { dataHandler } from "./data_handler.js";
+import {dataHandler} from "./data_handler.js";
 
 export let dom = {
     init: function () {
@@ -16,7 +16,7 @@ export let dom = {
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
-        dataHandler.getBoards(function(boards){
+        dataHandler.getBoards(function (boards) {
             dom.showBoards(boards);
         });
     },
@@ -26,7 +26,7 @@ export let dom = {
 
         let boardList = '';
 
-        for(let board of boards){
+        for (let board of boards) {
             boardList += `    
     
         
@@ -67,7 +67,7 @@ export let dom = {
             })
         }
         let createCardButtons = document.querySelectorAll('.create-card');
-        for (let button of createCardButtons){
+        for (let button of createCardButtons) {
             button.addEventListener('click', dom.createCard);
         }
 
@@ -79,8 +79,8 @@ export let dom = {
             renameBoardButton.addEventListener('mouseleave', dom.leave)
         }
     },
-    loadStatuses: function (boardId, callback){
-        dataHandler.getStatuses(boardId, function(statuses){
+    loadStatuses: function (boardId, callback) {
+        dataHandler.getStatuses(boardId, function (statuses) {
             dom.showStatuses(boardId, statuses);
             callback();
         });
@@ -89,7 +89,7 @@ export let dom = {
         // shows the cards of a board
         let statusList = '';
 
-        for(let status of statuses){
+        for (let status of statuses) {
             statusList += `
                     <div class="board-column" id="board-${boardId}-status-${status.id}">    
                         <div class="board-column-title" data-status="${status.id}">
@@ -114,10 +114,10 @@ export let dom = {
         }
         console.log(columns);
         dragula(columns, {
-                revertOnSpill: true
-            }).on('drop', function(el) {
-                console.log('dropped')
-            });
+            revertOnSpill: true
+        }).on('drop', function (el) {
+            console.log('dropped')
+        });
 
         let renameStatusButtons = document.querySelectorAll('.status-title')
         for (let renameStatusButton of renameStatusButtons) {
@@ -128,16 +128,16 @@ export let dom = {
         // it adds necessary event listeners also
     },
     loadCards: function (boardId, statusId) {
-            dataHandler.getBoard(boardId, statusId, function(cards) {
-                dom.showCards(boardId, statusId, cards);
-            });
+        dataHandler.getBoard(boardId, statusId, function (cards) {
+            dom.showCards(boardId, statusId, cards);
+        });
     },
     showCards: function (boardId, statusId, cards) {
         // shows the cards of a board
         let cardsList = '';
 
         // data order is given only for testing purposes
-        for(let card of cards){
+        for (let card of cards) {
             cardsList += `    
     
                         <div class="card" data-order="${card.order}">
@@ -172,35 +172,35 @@ export let dom = {
 
         let inputField = document.querySelector(".create-board-title")
         inputField.addEventListener('keypress', (e) => {
-                    console.log(e.key)
-                    if (e.key === 'Enter') {
-                        let board_title = e.target.value
-                        console.log(board_title)
-                        dataHandler.createNewBoard(board_title, dom.loadBoards)
-                        inputField.remove()
-                        createBoardButton.classList.remove('hidden');
-                    }
+                console.log(e.key)
+                if (e.key === 'Enter') {
+                    let board_title = e.target.value
+                    console.log(board_title)
+                    dataHandler.createNewBoard(board_title, dom.loadBoards)
+                    inputField.remove()
+                    createBoardButton.classList.remove('hidden');
                 }
-            )
+            }
+        )
     },
-    createStatus: function(evt){
+    createStatus: function (evt) {
         let createStatusButton = evt.target;
         createStatusButton.classList.add('hidden');
         const input_field = '<input class="create-board-title" placeholder="Write status title then press enter"/>'
         createStatusButton.insertAdjacentHTML('afterend', input_field);
         let inputField = document.querySelector(".create-board-title")
         inputField.addEventListener('keypress', (e) => {
-                    console.log(e.key)
-                    if (e.key === 'Enter') {
-                        let status_title = e.target.value;
-                        let board_id = evt.target.closest('section').dataset.id;
-                        console.log(status_title)
-                        dataHandler.createNewStatus(status_title, board_id, dom.loadBoards)
-                        inputField.remove()
-                        createStatusButton.classList.remove('hidden');
-                    }
+                console.log(e.key)
+                if (e.key === 'Enter') {
+                    let status_title = e.target.value;
+                    let board_id = evt.target.closest('section').dataset.id;
+                    console.log(status_title)
+                    dataHandler.createNewStatus(status_title, board_id, dom.loadBoards)
+                    inputField.remove()
+                    createStatusButton.classList.remove('hidden');
                 }
-            )
+            }
+        )
 
     },
     renameBoard: function (event) {
@@ -217,18 +217,19 @@ export let dom = {
             }
         })
         inputField.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        let board_title = e.target.value
-                        dataHandler.renameBoard(board_id, board_title, () => {})
-                        inputField.remove()
-                        renameBoardButton.innerHTML = board_title
-                        renameBoardButton.classList.remove('hidden');
-                    }
+                if (e.key === 'Enter') {
+                    let board_title = e.target.value
+                    dataHandler.renameBoard(board_id, board_title, () => {
+                    })
+                    inputField.remove()
+                    renameBoardButton.innerHTML = board_title
+                    renameBoardButton.classList.remove('hidden');
                 }
-            )
+            }
+        )
     },
     renameStatus: function (event) {
-    let renameStatusButton = event.target;
+        let renameStatusButton = event.target;
         renameStatusButton.classList.add('hidden')
         const input_field = '<input class="create-board-title" placeholder="Write status title then press enter"/>'
         renameStatusButton.insertAdjacentHTML('afterend', input_field);
@@ -241,19 +242,21 @@ export let dom = {
             }
         })
 
-    inputField.addEventListener('keypress', (e) => {
+        inputField.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     let status_title = e.target.value
                     console.log(status_title)
                     dataHandler.renameStatus(status_id, status_title,
-                        () => {renameStatusButton.innerHTML = status_title})
+                        () => {
+                            renameStatusButton.innerHTML = status_title
+                        })
                     inputField.remove()
                     renameStatusButton.classList.remove('hidden');
                 }
             }
         )
     },
-    renameCard: function(event){
+    renameCard: function (event) {
         let renameCardButton = event.target;
         renameCardButton.classList.add('hidden')
         const input_field = '<input class="create-board-title" placeholder="Write card title then press enter"/>'
@@ -267,11 +270,12 @@ export let dom = {
             }
         })
 
-    inputField.addEventListener('keypress', (e) => {
+        inputField.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     let card_title = e.target.value
                     console.log(card_title)
-                    dataHandler.renameCard(card_title, card_id, () => {})
+                    dataHandler.renameCard(card_title, card_id, () => {
+                    })
                     inputField.remove()
                     renameCardButton.innerHTML = card_title
                     renameCardButton.classList.remove('hidden');
@@ -298,28 +302,28 @@ export let dom = {
         }
 
     },
-    createCard: function(event){
-                let createCardButton = event.target;
-                let board = createCardButton.closest("section.board")
-                let boardID = board.dataset.id
-                let statusID = board.querySelector(".board-column-title").dataset.status
-                createCardButton.classList.add('hidden');
+    createCard: function (event) {
+        let createCardButton = event.target;
+        let board = createCardButton.closest("section.board")
+        let boardID = board.dataset.id
+        let statusID = board.querySelector(".board-column-title").dataset.status
+        createCardButton.classList.add('hidden');
 
-                const input_field = '<input class="create-card-title" placeholder="Write down the Card title then press enter"/>'
-                createCardButton.insertAdjacentHTML('afterend', input_field);
-                let inputField = document.querySelector(".create-card-title");
-                inputField.addEventListener('keypress', (e) => {
-                    console.log(e.key)
-                    if (e.key === 'Enter') {
-                        let card_title = e.target.value
-                        console.log(card_title)
-                        dataHandler.createCard(card_title, boardID, statusID, dom.loadCards)
-                        inputField.remove()
-                        createCardButton.classList.remove('hidden');
-                    }
-                })
-            },
-    deleteCard: function(event){
+        const input_field = '<input class="create-card-title" placeholder="Write down the Card title then press enter"/>'
+        createCardButton.insertAdjacentHTML('afterend', input_field);
+        let inputField = document.querySelector(".create-card-title");
+        inputField.addEventListener('keypress', (e) => {
+            console.log(e.key)
+            if (e.key === 'Enter') {
+                let card_title = e.target.value
+                console.log(card_title)
+                dataHandler.createCard(card_title, boardID, statusID, dom.loadBoards)
+                inputField.remove()
+                createCardButton.classList.remove('hidden');
+            }
+        })
+    },
+    deleteCard: function (event) {
         let deleteCardButton = event.target.parentNode
         let card_id = deleteCardButton.dataset.id
         document.addEventListener('click', (e) => {
@@ -329,7 +333,5 @@ export let dom = {
             })
 
         })
-    },
-                });
-            }
+    }
 };
