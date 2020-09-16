@@ -7,7 +7,6 @@
 }
 
 body{
-    min-width: 620px;
     background: #ddd url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/diagonal-noise.png);
     font-family: sans-serif;
 }
@@ -36,9 +35,7 @@ button{
     max-width: 960px;
     margin: 0 auto;
 }
-.card-container{
-    min-height: 100px;
-}
+
 section.board{
     margin: 20px;
     border: aliceblue;
@@ -68,12 +65,13 @@ section.board{
 
 .board-columns{
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 }
 
 .board-column{
     padding: 10px;
     flex: 1;
+    flex-basis: 25%;
 }
 
 .board-column-content{
@@ -90,7 +88,9 @@ section.board{
 
 .board-column-title{
     text-align: center;
-    min-width: 30px;
+    line-break: auto;
+    word-break: break-all;
+
 }
 
 .card{
@@ -126,18 +126,11 @@ section.board{
     font-size: 12px;
     cursor: pointer;
 }
-.board-remove {
-    cursor: pointer;
-    float: left;
-    margin-top: 18px;
-    margin-left: 8px;
-}
-.status-remove{
-    color: darkslategrey;
-    cursor: pointer;
-}
+
 .card-title{
     padding-right: 16px;
+    line-break: auto;
+    word-break: break-all;
 }
 #title{
 margin: 18px 32px 18px 32px;
@@ -171,6 +164,7 @@ margin: 18px 32px 18px 32px;
 
 .create-board {
     border-radius: 5px;
+    margin-top: 16px;
 }
 
 .create-board-title {
