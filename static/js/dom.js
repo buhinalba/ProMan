@@ -68,7 +68,9 @@ export let dom = {
         }
         let createCardButtons = document.querySelectorAll('.create-card');
         for (let button of createCardButtons) {
-            button.addEventListener('click', dom.createCard);
+            button.addEventListener('click', dom.createCard)
+            button.addEventListener('mouseover', dom.hover)
+            button.addEventListener('mouseleave', dom.leave)
         }
 
         // todo add rename feature for boards
