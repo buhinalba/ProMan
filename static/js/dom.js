@@ -121,6 +121,7 @@ export let dom = {
     },
     showCards: function (boardId, statusId, cards) {
         // shows the cards of a board
+        console.log(cards)
         let cardsList = '';
 
         // data order is given only for testing purposes
@@ -310,12 +311,13 @@ export let dom = {
                 })
             },
     deleteCard: function(event){
-        let deleteCardButton = event.target
+        let deleteCardButton = event.target.parentNode
         let card_id = deleteCardButton.dataset.id
         document.addEventListener('click', (e) => {
-           dataHandler.deleteCard(card_id, ()=>{
-
-           });
+            dataHandler.deleteCard(card_id, function (cards) {
+                let cardToDelete = deleteCardButton.parentNode
+                cardToDelete.remove()
+            })
 
         })
     },

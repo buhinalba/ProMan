@@ -146,10 +146,9 @@ def create_card():
     return make_response(jsonify({"message": "OK"}), 200)
 
 
-@app.route("/delete-card", methods=["DELETE"])
-def delete_card():
-    req = request.delete_json()
-    data_handler.delete_card(req["card_id"])
+@app.route("/delete-card/<int:card_id>", methods=["GET"])
+def delete_card(card_id):
+    data_handler.delete_card(card_id)
     return make_response(jsonify({"message": "OK"}), 200)
 
 

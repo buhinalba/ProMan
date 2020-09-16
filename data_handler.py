@@ -25,7 +25,6 @@ def get_cards_for_board(cursor, board_id, status_id):
                 WHERE board_id = %(board_id)s AND status_id=%(status_id)s
                 ORDER BY  "order" ;
                 """
-
     cursor.execute(query, {'board_id': board_id, 'status_id': status_id})
     return cursor.fetchall()
 

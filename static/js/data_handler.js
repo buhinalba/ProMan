@@ -119,8 +119,9 @@ export let dataHandler = {
         this._api_post('/rename-card', data, callback)
     },
     deleteCard: function (card_id, callback){
-        let data = {card_id: card_id}
-        this._api_delete('/delete-card', data, callback)
+        this._api_get(`/delete-card/${card_id}`, (response)=>{
+            callback(response)
+        })
     },
 
     // here comes more features
