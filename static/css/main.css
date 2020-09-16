@@ -36,7 +36,9 @@ button{
     max-width: 960px;
     margin: 0 auto;
 }
-
+.card-container{
+    min-height: 100px;
+}
 section.board{
     margin: 20px;
     border: aliceblue;
