@@ -35,7 +35,9 @@ button{
     max-width: 960px;
     margin: 0 auto;
 }
-
+.card-container{
+    min-height: 100px;
+}
 section.board{
     margin: 20px;
     border: aliceblue;
@@ -90,6 +92,7 @@ section.board{
     text-align: center;
     line-break: auto;
     word-break: break-all;
+    min-width: 30px;
 
 }
 
@@ -117,7 +120,16 @@ section.board{
 .board-column:nth-of-type(4) .card{
     background: var(--status-4);
 }
-
+.board-remove {
+    cursor: pointer;
+    float: left;
+    margin-top: 18px;
+    margin-left: 8px;
+}
+.status-remove{
+    color: darkslategrey;
+    cursor: pointer;
+}
 .card-remove{
     display: block;
     position: absolute;
