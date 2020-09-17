@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, request, session, redirect, jsonify, make_response, flash
 from util import json_response
 import secrets
-
+from send_mail import send_mail
 import data_handler
 import util
 
@@ -53,6 +53,14 @@ def register():
     return render_template('registration.html')
 
 
+@app.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    if request.method == "POST":
+        username, message = request.form["username"], request.form["message"]
+        data_handler.leave_feedback(username, message)
+        send_mail(username, message)
+        return redirect(url_for("index"))
+    return render_template("feedback.html")
 
 
 
