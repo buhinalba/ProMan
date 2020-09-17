@@ -361,14 +361,14 @@ export let dom = {
         let deleteStatusButton = event.target.parentNode
         let status_id = deleteStatusButton.dataset.id
         console.log(status_id)
-        document.addEventListener('click', (e) => {
-            dataHandler.deleteStatus(status_id, () => {
-                let statusToDelete = deleteStatusButton.parentNode;
-                let cardsContainer = statusToDelete.parentNode;
-                cardsContainer.remove()
-                statusToDelete.remove()
-            })
+
+        dataHandler.deleteStatus(status_id, () => {
+            let statusToDelete = deleteStatusButton.parentNode;
+            let cardsContainer = statusToDelete.parentNode;
+            cardsContainer.remove()
+            statusToDelete.remove()
         })
+
     },
     deleteCard: function (event) {
         let deleteCardButton = event.target.parentNode
