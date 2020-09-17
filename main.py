@@ -62,7 +62,8 @@ def get_boards():
     """
     All the boards
     """
-    return data_handler.get_boards()
+    user_id = data_handler.get_user(session['username'])['id'] if 'username' in session else None
+    return data_handler.get_boards(user_id)
 
 
 @app.route("/get-cards/<int:board_id>/get-statuses/<int:status_id>")

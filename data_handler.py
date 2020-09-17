@@ -5,16 +5,23 @@ from flask import redirect
 
 
 @util.connection_handler
-def get_boards(cursor):
+def get_boards(cursor, user_id):
     """
     Gather all boards
     :return:
     """
-    query = f"""
+    query_private = f"""
             SELECT * FROM board
+            WHERE user_id = %(user_id)s
             ORDER BY id;
             """
-    cursor.execute(query)
+    query_public = """
+            SELECT * FROM board
+            WHERE user_id IS NULL
+            ORDER BY id;
+            """
+    query = query_private if user_id else query_public
+    cursor.execute(query, {'user_id': user_id})
     return cursor.fetchall()
 
 
@@ -125,7 +132,7 @@ def get_user(cursor: RealDictCursor, username):
     cursor.execute("""
         SELECT * FROM "user" 
         WHERE username like %(username)s
-        """,{'username': username})
+        """, {'username': username})
     return cursor.fetchone()
 
 
