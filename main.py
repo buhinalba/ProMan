@@ -165,6 +165,18 @@ def delete_card(card_id):
     return make_response(jsonify({"message": "OK"}), 200)
 
 
+@app.route("/update-card/<int:card_id>/<int:status_id>/<int:previous_order>", methods=["GET", "POST"])
+def update_card(card_id, status_id, previous_order):
+    data_handler.update_card(card_id, status_id, previous_order)
+    data_handler.update_sibling_cards(status_id, previous_order)
+    # update dropped card's status_id
+    # only update card with status_id === status_id,
+    # if previousSibling is null => SET card.order = 0
+    # dropped card's order should be previousOder + 1,
+    # increment all cards order with (order > previousOder + 1) by +1
+    return make_response(jsonify({"message": "OK"}), 200)
+
+
 def main():
     app.run(debug=True)
 

@@ -123,10 +123,9 @@ export let dom = {
             revertOnSpill: true
         }).on('drop', function (el) {
             let previousSibling = el.previousElementSibling
-            let nextSibling = el.nextElementSibling
             let status_id = el.closest(".board-column").dataset.statusId
             let card_id = el.dataset.id
-            dataHandler.updateCardPosition(status_id, previousSibling, nextSibling, card_id)
+            dataHandler.updateCardPosition(status_id, previousSibling, card_id)
         });
 
         let renameStatusButtons = document.querySelectorAll('.status-title')

@@ -212,6 +212,25 @@ def delete_card(cursor: RealDictCursor, card_id):
     cursor.execute(query, {'card_id': card_id})
 
 
+@util.connection_handler
+def update_card(cursor, card_id, status_id, previous_order):
+    query = """
+    UPDATE card
+    SET status_id = %(status_id)s, "order" = %(prev_order)s + 1
+    WHERE id = %(card_id)s
+    """
+    cursor.execute(query, {"status_id": status_id, "prev_order": previous_order, "card_id": card_id})
+
+
+@util.connection_handler
+def update_sibling_cards(cursor, status_id, previous_order):
+    query = """
+    UPDATE card
+    SET "order" = "order" + 1
+    WHERE status_id = %(status_id)s and "order" > %(prev_order)s
+    """
+    cursor.execute(query, {"status_id": status_id, "prev_order": previous_order})
+
 
 def hash_password(plain_text_password):
     # By using bcrypt, the salt is saved into the hash itself
