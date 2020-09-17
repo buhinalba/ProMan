@@ -44,7 +44,7 @@ def logout():
     return redirect(url_for("index"))
 
 
-@app.route('/registration', methods=["GET", "POST"])
+@app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         username, password = request.form["username"],request.form["password"]
