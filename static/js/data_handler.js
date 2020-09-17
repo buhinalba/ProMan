@@ -133,6 +133,19 @@ export let dataHandler = {
             callback(response)
         })
     },
+    updateCardPosition(status_id, previousSibling, nextSibling, card_id) {
+        let previousOrder = previousSibling.dataset.order
+        let nextOrder = nextSibling.dataset.order
+        let data = {status_id: status_id,
+                    previousOrder: previousOrder,
+                    nextOrder: nextOrder,
+                    card_id: card_id}
+        // update dropped card's status_id
+        // only update card with status_id === status_id,
+        // if previousSibling is null => SET card.order = 0
+        // dropped card's order should be previousOder + 1,
+        // increment all cards order with (order > previousOder + 1) by +1
+    }
 
     // here comes more features
 };

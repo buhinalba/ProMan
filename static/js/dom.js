@@ -5,7 +5,6 @@ export let dom = {
     init: function () {
         dom.loadBoards()
         const passwordToggle = document.querySelector('.password-toggle')
-        console.log(passwordToggle)
         if (passwordToggle) {
             console.log(passwordToggle)
             passwordToggle.addEventListener('click', dom.togglePassword)
@@ -97,7 +96,7 @@ export let dom = {
 
         for (let status of statuses) {
             statusList += `
-                    <div class="board-column" id="board-${boardId}-status-${status.id}">    
+                    <div class="board-column" id="board-${boardId}-status-${status.id}" data-status-id="${status.id}">    
                         <div class="board-column-title" data-status="${status.id}">
                             <div class="status-remove" data-id="${status.id}"><i class="fas fa-trash-alt"></i></div>
                             <div class="status-title">${status.title}</div>
@@ -123,7 +122,11 @@ export let dom = {
         dragula(columns, {
             revertOnSpill: true
         }).on('drop', function (el) {
-            console.log('dropped')
+            let previousSibling = el.previousElementSibling
+            let nextSibling = el.nextElementSibling
+            let status_id = el.closest(".board-column").dataset.statusId
+            let card_id = el.dataset.id
+            dataHandler.updateCardPosition(status_id, previousSibling, nextSibling, card_id)
         });
 
         let renameStatusButtons = document.querySelectorAll('.status-title')
@@ -152,7 +155,7 @@ export let dom = {
         for (let card of cards) {
             cardsList += `    
     
-                        <div class="card" data-order="${card.order}">
+                        <div class="card" data-order="${card.order}" data-id="${card.id}">
                             <div class="card-remove" data-id="${card.id}"><i class="fas fa-trash-alt"></i></div>
                             <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                         </div>
