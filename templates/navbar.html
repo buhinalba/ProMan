@@ -6,22 +6,21 @@
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    {% if not username %}
         <li class="nav-item">
         <a class="nav-link" href="/registration">Register</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/login">Login</a>
       </li>
-        {% if username %}
+    {% else %}
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout</a>
       </li>
-        {% endif %}
     </ul>
-    {% if username %}
-        <span class="navbar-text">
+    <span class="navbar-text">
         Logged in as {{ username }}
-        </span>
-    {% endif %}
+    </span>
+  {% endif %}
   </div>
 </nav>
