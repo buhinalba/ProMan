@@ -68,6 +68,14 @@ def create_card(cursor: RealDictCursor, board_id, card_title, status_id):
 
 
 @util.connection_handler
+def leave_feedback(cursor: RealDictCursor, username, message):
+    cursor.execute("""
+            INSERT INTO feedback(username, message)
+            VALUES (%(username)s, %(message)s)
+        """, {'username': username, 'message': message})
+
+
+@util.connection_handler
 def create_default_statuses(cursor: RealDictCursor, max_id):
     cursor.execute("""
         INSERT INTO status (title, board_id)
