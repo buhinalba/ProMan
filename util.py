@@ -39,7 +39,8 @@ def get_connection_string():
             database_name=database_name
         )
     else:
-        raise KeyError('Some necessary environment variable(s) are not defined')
+        return 'postgres://moiqblevbbwyhd:f6566c816bae4c633372c0ea6b72fc830a0b8cf60fd8afec6654802814c571e5@ec2-54-146-142-58.compute-1.amazonaws.com:5432/d6rd28kp7qdche'
+
 
 
 def open_database():
