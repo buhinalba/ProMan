@@ -238,6 +238,12 @@ export let dom = {
         const input_field = '<input class="create-card-title" placeholder="Write down the Card title then press enter"/>'
         createCardButton.insertAdjacentHTML('afterend', input_field);
         let inputField = document.querySelector(".create-card-title");
+        document.addEventListener('click', (e) => {
+            if (!createCardButton.contains(e.target) && !(inputField === e.target)) {
+                inputField.remove()
+                createCardButton.classList.remove('hidden');
+            }
+        })
         inputField.addEventListener('keypress', (e) => {
             console.log(e.key)
             if (e.key === 'Enter') {
